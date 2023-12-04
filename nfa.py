@@ -5,7 +5,7 @@ import copy
 
 class NFA:
     def __init__(self):
-        # -states = a list of states (object?) in the NFA
+        # -states = a list of states (object! - state.py) in the NFA
         self.states = []
 
         # -accepting = A dictionary, the key is the state id and value is a boolean indicating which states are acceping
@@ -21,7 +21,7 @@ class NFA:
         pass
 
     # You should write this function.
-    # It takes two states and a symbol. It adds a transition from 
+    # It takes two states (object!) and a symbol. It adds a transition from 
     # the first state of the NFA to the other input state of the NFA.
     # need for transformation of ConcatRegex and OrRegex (regex.py) to NFA
     def addTransition(self, s1, s2, sym = '&'):

@@ -24,7 +24,7 @@ if __name__ == "__main__":
     def testNFA(strRe, s, expected):
         # returns regex object
         re = parse_re(strRe)
-        
+
         # test your nfa conversion
         nfa = re.transformToNFA()
         res = nfa.isStringInLanguage(s)
@@ -67,13 +67,19 @@ if __name__ == "__main__":
         pass
 
     #test your NFA:
+    # format = testNFA(RE, input string, expected)
 
     # my NFA
     # EpsilonRegex testing transformtoNFA
-    testNFA('&', '', True)
-    testNFA('&', 'a', False)
-    testNFA('&', ' ', False)
-    testNFA('&', 'ab', False)
+    # testNFA('&', '', True)
+    # testNFA('&', 'a', False)
+    # testNFA('&', ' ', False)
+    # testNFA('&', 'ab', False)
+
+    # SymRegex testing transformtoNFA
+    testNFA('a', 'a', True)
+    testNFA('a', 'b', False)
+    testNFA('a', 'ab', False)
 
 
     #testNFA('a', '', False)
