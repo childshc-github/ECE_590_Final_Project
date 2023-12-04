@@ -30,11 +30,30 @@ class NFA:
         pass
 
     # You should write this function.
-    # It takes an nfa, adds all the states from that nfa and return a 
+    # It takes an nfa, adds all the states from that nfa and returns a 
     # mapping of (state number in old NFA -> state number in this NFA) as a dictionary.
     # need for transformation of ConcatRegex and OrRegex (regex.py) to NFA
     def addStatesFrom(self, nfa):
-        pass
+        # find length of nfa + increment new NFA ids in dict
+        incr = len(nfa.states)
+        new_dict = {}
+
+        for s in nfa.states:
+            # create mapping dict
+            new_id = s.id + incr
+            new_dict[s.id] = new_id
+
+            # update nfa key
+            s.id = new_id
+
+            # update nfs transitions FIXME
+            for t1 in s.transition.values():
+                print(t1)
+
+            # append nfa to self
+            self.states.append(s)
+
+        return new_dict
 
     # You should write this function.
     # It takes a state and returns the epsilon closure of that state 

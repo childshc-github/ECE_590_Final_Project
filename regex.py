@@ -27,8 +27,41 @@ class ConcatRegex(Regex):
     def __str__(self):
         return "{}{}".format(self.children[0],self.children[1])
     def transformToNFA(self):
-        # FIXME
-        pass
+        # # create NFA for children
+        # nfar1 = NFA()
+        # nfar2 = NFA()
+
+        # # add states + transitions
+        # stater1s = State(0)
+        # stater1f = State(1)
+        # nfar1.states = [stater1s, stater1f]
+        # nfar1.addTransition(nfar1.states[0], nfar1.states[1], self.children[0])
+        # nfar1.is_accepting = {0 : False, 1 : False}
+
+        # stater2s = State(0)
+        # stater2f = State(1)
+        # nfar2.states = [stater2s, stater2f]
+        # nfar2.addTransition(nfar2.states[0], nfar2.states[1], self.children[1])
+        # nfar2.is_accepting = {0 : False, 1 : True}
+
+        # # concat r1 to r2
+        # map_dict = nfar2.addStatesFrom(nfar1)
+
+        # # return new nfa
+        # return nfar2
+        nfa = NFA()
+        state0 = State(0)
+        state1 = State(1)
+        state2 = State(2)
+        state3 = State(3)
+        nfa.is_accepting = {0 : False, 1 : False, 2 : False, 3 : True}
+        nfa.states = [state0, state1, state2, state3]
+        nfa.addTransition(nfa.states[0], nfa.states[1], self.children[0])
+        nfa.addTransition(nfa.states[1], nfa.states[2])
+        nfa.addTransition(nfa.states[2], nfa.states[3], self.children[1])
+        return nfa
+
+
     pass
 
 class StarRegex(Regex):
