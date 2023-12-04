@@ -71,10 +71,10 @@ if __name__ == "__main__":
 
     # my NFA
     # EpsilonRegex testing transformtoNFA
-    # testNFA('&', '', True)
-    # testNFA('&', 'a', False)
-    # testNFA('&', ' ', False)
-    # testNFA('&', 'ab', False)
+    testNFA('&', '', True)
+    testNFA('&', 'a', False)
+    testNFA('&', ' ', False)
+    testNFA('&', 'ab', False)
 
     # SymRegex testing transformtoNFA
     testNFA('a', 'a', True)
