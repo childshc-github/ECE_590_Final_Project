@@ -72,7 +72,8 @@ class EpsilonRegex(Regex):
     def __repr__(self):
         return '&'
     def transformToNFA(self):
-        #FIXME
+        #FIXME - should create object + return it
+        
         pass
     pass
 

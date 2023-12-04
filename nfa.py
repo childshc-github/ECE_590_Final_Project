@@ -77,8 +77,3 @@ class NFA:
         else:
             return False
     pass
-
-
-
-if __name__ == "__main__":
-    

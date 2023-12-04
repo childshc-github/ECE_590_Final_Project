@@ -65,7 +65,7 @@ if __name__ == "__main__":
         pass
 
     #test your NFA:
-    # testNFA('a', '', False)
+    #testNFA('a', '', False)
     # testNFA('a', 'a', True)
     # testNFA('a', 'ab', False)
     # testNFA('a*', '', True)
