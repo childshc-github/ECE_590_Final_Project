@@ -24,7 +24,7 @@ if __name__ == "__main__":
     def testNFA(strRe, s, expected):
         # returns regex object
         re = parse_re(strRe)
-
+        
         # test your nfa conversion
         nfa = re.transformToNFA()
         res = nfa.isStringInLanguage(s)

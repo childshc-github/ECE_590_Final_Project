@@ -25,6 +25,8 @@ class NFA:
     # the first state of the NFA to the other input state of the NFA.
     # need for transformation of ConcatRegex and OrRegex (regex.py) to NFA
     def addTransition(self, s1, s2, sym = '&'):
+        # add trans from s1 -> s2 State (dict)
+        s1.transition = {sym : [s2]}
         pass
 
     # You should write this function.

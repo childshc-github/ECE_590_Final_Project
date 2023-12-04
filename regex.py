@@ -53,7 +53,7 @@ class OrRegex(Regex):
         pass
     pass
 
-# Sym=symbol?
+# Sym=symbol
 class SymRegex(Regex):
     def __init__(self, sym):
         self.sym=sym
@@ -64,11 +64,13 @@ class SymRegex(Regex):
         return self.sym
     def transformToNFA(self):
         nfa = NFA()
-        state = State(0)
+        state0 = State(0)
+        state1 = State(1)
 
-        nfa.states = [state]
-        nfa.is_accepting = {0 : False}
+        nfa.states = [state0, state1]
+        nfa.is_accepting = {0 : False, 1 : True}
         nfa.alphabet = [self.sym]
+        nfa.addTransition(nfa.states[0], nfa.states[1], self.sym)
 
         return nfa
     pass
@@ -86,7 +88,7 @@ class EpsilonRegex(Regex):
 
         nfa.states = [state]
         nfa.is_accepting = {0 : True}
-        nfa.alphabet = []
+        #nfa.alphabet = []
 
         return nfa
     pass
