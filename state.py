@@ -11,7 +11,7 @@ class State:
 
     def copy(self, s):
         self.id = s.id
-        self.transition = copydeepcopy.(s.transition)
+        self.transition = copy.deepcopy(s.transition)
     def __str__(self):
         ans = self.id
     pass

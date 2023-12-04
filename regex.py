@@ -4,6 +4,7 @@ from state import *
 # used to build up tree. Transform regex -> NFA.
 
 class Regex:
+    # converts printable object to string
     def __repr__(self):
         ans=str(type(self))+"("
         sep=""
@@ -13,6 +14,7 @@ class Regex:
             pass
         ans=ans+")"
         return ans
+
     def transformToNFA(self):
         # FIXME - should create new object and return it
         pass
@@ -72,9 +74,14 @@ class EpsilonRegex(Regex):
     def __repr__(self):
         return '&'
     def transformToNFA(self):
-        #FIXME - should create object + return it
-        
-        pass
+        nfa = NFA()
+        state = State(0)
+
+        nfa.states = [state]
+        nfa.is_accepting = {0 : True}
+        nfa.alphabet = []
+
+        return nfa
     pass
 
 class ReInput:
@@ -110,7 +117,6 @@ class ReInput:
 # S -> atom stars
 # atom -> (R) | sym | &
 # stars -> * stars | eps
-
 
 #It gets a regular expression string and returns a Regex object. 
 def parse_re(s):

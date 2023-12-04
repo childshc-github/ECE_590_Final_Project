@@ -5,7 +5,7 @@ import copy
 
 class NFA:
     def __init__(self):
-        # -states = a list of states in the NFA
+        # -states = a list of states (object?) in the NFA
         self.states = []
 
         # -accepting = A dictionary, the key is the state id and value is a boolean indicating which states are acceping
