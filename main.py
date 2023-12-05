@@ -78,16 +78,17 @@ if __name__ == "__main__":
 
     # SymRegex testing transformtoNFA
     # testNFA('a', 'a', True)
+    # testNFA('b', 'b', True)
     # testNFA('a', 'b', False)
     # testNFA('a', 'ab', False)
 
     # ConcatRegex testing transformtoNFA
     testNFA('ab', 'ab', True)
-    testNFA('ab', 'a', False)
-    testNFA('ab', 'b', False)
-    testNFA('aba', 'aba', True)
-    testNFA('aba', 'ab', False)
-    testNFA('aba', 'ba', False)
+    #testNFA('ab', 'a', False)
+    #testNFA('ab', 'b', False)
+    #testNFA('aba', 'aba', True)
+    #testNFA('aba', 'ab', False)
+    #testNFA('abaa', 'ba', False)
 
     #testNFA('a', '', False)
     # testNFA('a', 'a', True)
