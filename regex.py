@@ -37,8 +37,8 @@ class ConcatRegex(Regex):
             return nfa2
         if len(nfa2.states) == 0:
             return nfa1
-
-        # add epsilon NFA transition 1 -> 2 for all accept states
+        
+        # add transitions from NFA1 accept to NFA 2
         NFA1_astates = []
         for k, v in nfa1.is_accepting.items():
             if v == True:
