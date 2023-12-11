@@ -85,10 +85,10 @@ if __name__ == "__main__":
     # ConcatRegex testing transformtoNFA
     testNFA('ab', 'ab', True)
     testNFA('ab', 'a', False)
-    #testNFA('ab', 'b', False)
-    #testNFA('aba', 'aba', True)
-    #testNFA('aba', 'ab', False)
-    #testNFA('abaa', 'ba', False)
+    testNFA('ab', 'b', False)
+    testNFA('aba', 'aba', True)
+    testNFA('aba', 'ab', False)
+    testNFA('abaa', 'ba', False)
 
     #testNFA('a', '', False)
     # testNFA('a', 'a', True)

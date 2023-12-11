@@ -43,16 +43,20 @@ class NFA:
             new_id = s.id + incr
             new_dict[s.id] = new_id
 
-            # update nfa key
+            # update nfa key - COULD CREATE DUPLICATE KEYS!
             s.id = new_id
-
-            # update nfs transitions
-            for t1 in s.transition.values():
-                print(t1)
-
 
             # append nfa to self
             self.states.append(s)
+        
+        # update accepting
+        for k, v in nfa.is_accepting.items():
+            k = k + incr
+            self.is_accepting[k] = v
+        
+        # update dictionary
+        for a in nfa.alphabet:
+            self.alphabet.append(a)
 
         return new_dict
 
