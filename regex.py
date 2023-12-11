@@ -31,18 +31,29 @@ class ConcatRegex(Regex):
         # rhs = child 0 (>=)
         # lhs = child 1 (always length 1)
 
-        nfa = NFA()
-        state0 = State(0)
-        state1 = State(1)
-        state2 = State(2)
-        nfa.states = [state0, state1, state2]
-        nfa.addTransition(nfa.states[0], nfa.states[1], self.children[0])
-        nfa.addTransition(nfa.states[1], nfa.states[2], self.children[1])
-        nfa.is_accepting = {0 : False, 1 : False, 2 : True}
-        nfa.alphabet = [self.children[0], self.children[1]]
+
+        # nfar1 = NFA()
+        # nfar2 = NFA()
+
+        # state0r1 = State(0)
+        # state1r1 = State(1)
+        # nfar1.states = [state0r1, state1r1]
+        # nfar1.addTransition(nfar1.states[0], nfar1.states[1], self.children[0])
+        # nfar1.is_accepting = {0 : False, 1 : True}
+        # nfar1.alphabet = [self.children[0]]
+        
+        # state0r2 = State(0)
+        # state1r2 = State(1)
+        # nfar2.states = [state0r2, state1r2]
+        # nfar2.addTransition(nfar2.states[0], nfar2.states[1], self.children[1])
+        # nfar2.is_accepting = {0 : False, 1 : True}
+        # nfar2.alphabet = [self.children[1]]
 
 
-        return nfa
+
+
+
+        return nfa_test
 
     pass
 

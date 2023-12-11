@@ -50,6 +50,7 @@ class NFA:
             for t1 in s.transition.values():
                 print(t1)
 
+
             # append nfa to self
             self.states.append(s)
 
