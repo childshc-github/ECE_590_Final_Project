@@ -38,17 +38,6 @@ class NFA:
         incr = len(nfa.states)
         new_dict = {}
 
-        for s in nfa.states:
-            # create mapping dict
-            new_id = s.id + incr
-            new_dict[s.id] = new_id
-
-            # update nfa key - COULD CREATE DUPLICATE KEYS!
-            s.id = new_id
-
-            # append nfa to self
-            self.states.append(s)
-        
         # update accepting
         for k, v in nfa.is_accepting.items():
             k = k + incr
@@ -57,6 +46,18 @@ class NFA:
         # update dictionary
         for a in nfa.alphabet:
             self.alphabet.append(a)
+
+        for s in nfa.states:
+            # create mapping dict
+            holder = s
+            new_id = holder.id + incr
+            new_dict[holder.id] = new_id
+
+            # update nfa key - COULD CREATE DUPLICATE KEYS!
+            holder.id = new_id
+
+            # append nfa to self
+            self.states.append(holder)
 
         return new_dict
 

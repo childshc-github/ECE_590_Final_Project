@@ -89,6 +89,7 @@ if __name__ == "__main__":
     testNFA('aba', 'aba', True)
     testNFA('aba', 'ab', False)
     testNFA('abaa', 'ba', False)
+    testNFA('abaa', 'abaa', True)
 
     #testNFA('a', '', False)
     # testNFA('a', 'a', True)
