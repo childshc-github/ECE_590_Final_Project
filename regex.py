@@ -28,34 +28,28 @@ class ConcatRegex(Regex):
         return "{}{}".format(self.children[0],self.children[1])
     def transformToNFA(self):
 
-        # rhs = child 0 (>=)
-        # lhs = child 1 (always length 1)
+        # transform NFAs (use fxn)
+        nfa1 = self.children[0].transformToNFA()
+        nfa2 = self.children[1].transformToNFA()
 
+        # return if either empty
+        if len(nfa1.states == 0):
+            return nfa2
+        if len(nfa2.states == 0):
+            return nfa1
 
-        # nfar1 = NFA()
-        # nfar2 = NFA()
+        # add epsilon NFA transition 1 -> 2
+        nfa1.addTransition(nfa1.states[-1], nfa2.states[0])
 
-        # state0r1 = State(0)
-        # state1r1 = State(1)
-        # nfar1.states = [state0r1, state1r1]
-        # nfar1.addTransition(nfar1.states[0], nfar1.states[1], self.children[0])
-        # nfar1.is_accepting = {0 : False, 1 : True}
-        # nfar1.alphabet = [self.children[0]]
-        
-        # state0r2 = State(0)
-        # state1r2 = State(1)
-        # nfar2.states = [state0r2, state1r2]
-        # nfar2.addTransition(nfar2.states[0], nfar2.states[1], self.children[1])
-        # nfar2.is_accepting = {0 : False, 1 : True}
-        # nfar2.alphabet = [self.children[1]]
+        # adjust NFA 1 accepting
+        NFA1_last = len(nfa1.states) - 1
+        nfa1.is_accepting = {NFA1_last : False}
 
+        # add NFA2 to NFA1
 
+        # adjust accept states
 
-
-
-        return nfa_test
-
-    pass
+        return nfa
 
 class StarRegex(Regex):
     def __init__(self, r1):

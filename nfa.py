@@ -46,7 +46,7 @@ class NFA:
             # update nfa key
             s.id = new_id
 
-            # update nfs transitions FIXME
+            # update nfs transitions
             for t1 in s.transition.values():
                 print(t1)
 
