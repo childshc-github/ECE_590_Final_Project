@@ -53,7 +53,7 @@ class NFA:
             new_id = holder.id + incr
             new_dict[holder.id] = new_id
 
-            # update nfa key - COULD CREATE DUPLICATE KEYS!
+            # update nfa key
             holder.id = new_id
 
             # append nfa to self
