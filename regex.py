@@ -27,30 +27,26 @@ class ConcatRegex(Regex):
     def __str__(self):
         return "{}{}".format(self.children[0],self.children[1])
     def transformToNFA(self):
-
         # transform regex -> NFAs
         nfa1 = self.children[0].transformToNFA()
         nfa2 = self.children[1].transformToNFA()
-
-        # return if either empty
-        if len(nfa1.states) == 0:
-            return nfa2
-        if len(nfa2.states) == 0:
-            return nfa1
         
-        # add transitions from NFA1 accept to NFA 2
+        # update NFA1 accepts
         NFA1_astates = []
         for k, v in nfa1.is_accepting.items():
             if v == True:
                 NFA1_astates.append(k)
                 nfa1.is_accepting[k] = False
-       
-        for k in NFA1_astates:
-            nfa1.addTransition(nfa1.states[k], nfa2.states[0])
-
+        
         # add NFA2 to NFA1
         new_map = nfa1.addStatesFrom(nfa2)
 
+        # add trans based on map
+        for a in NFA1_astates:
+            for k in new_map.keys():
+                if a == k:
+                    nfa1.addTransition(nfa1.states[k], nfa2.states[0])
+        
         return nfa1
 
 class StarRegex(Regex):
@@ -64,9 +60,8 @@ class StarRegex(Regex):
         nfa = self.children[0].transformToNFA()
 
         # update transition
-        nfa.addTransition(nfa.states[0], nfa.states[1], str(self.children[0]))
         nfa.addTransition(nfa.states[1], nfa.states[1], str(self.children[0]))
-
+        
         # update alphabet
         nfa.alphabet = [str(self.children[0])]
 

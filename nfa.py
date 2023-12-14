@@ -29,12 +29,11 @@ class NFA:
         for k, v in s1.transition.items():
             if k == sym:
                 newv = v.append(s2)
-                s1.transition = {sym : newv}
-                #print(s1.transition)
+                s1.transition[sym] = newv
                 return
             
         # else, add trans from s1 -> s2 State (dict)
-        s1.transition = {sym : [s2]}
+        s1.transition[sym] = [s2]
         pass
 
     # You should write this function.
@@ -44,12 +43,14 @@ class NFA:
     def addStatesFrom(self, nfa):
         # find length of nfa + increment new NFA ids in dict
         incr = len(self.states)
+        new_dict = dict()
 
         # create copy NFA w/ new IDs - avoid memory + overlap ID issues
         cnfa = NFA()
         # update states w/ new incremented IDs
         for s in nfa.states:
             new_id = s.id + incr
+            new_dict[s.id] = new_id
             newS = State(new_id)
             newS.transition = s.transition.copy()
             cnfa.states.append(newS)
@@ -61,9 +62,6 @@ class NFA:
         # update dictionary
         for a in nfa.alphabet:
             self.alphabet.append(a)
-        
-        # new_dict is not used - included for simplicity
-        new_dict = {0 : 0}
 
         # append cNFA to self
         for s in cnfa.states:
