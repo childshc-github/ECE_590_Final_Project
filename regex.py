@@ -90,11 +90,11 @@ class OrRegex(Regex):
         nfa2 = self.children[1].transformToNFA()
 
         # add & trans from start NFA to both NFAs
-        nfa0.addTransition(state0, nfa1.states[0])
-        nfa0.addTransition(state0, nfa2.states[0])
-        print(state0.transition)
+        nfa0.addTransition(nfa0.states[0], nfa1.states[0])
+        nfa0.addTransition(nfa0.states[0], nfa2.states[0])
+        print(nfa0.states[0].transition)
 
-        # add NFA1 and 2 to NFA0
+        # add NFA1 and NFA2 to NFA0
         hold1 = nfa0.addStatesFrom(nfa1)
         hold2 = nfa0.addStatesFrom(nfa2)
         

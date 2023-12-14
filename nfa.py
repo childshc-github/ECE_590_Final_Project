@@ -28,8 +28,7 @@ class NFA:
         # if sym already in dict, append s2 to set
         for k, v in s1.transition.items():
             if k == sym:
-                newv = v.append(s2)
-                s1.transition[sym] = newv
+                v.append(s2)
                 return
             
         # else, add trans from s1 -> s2 State (dict)
@@ -83,6 +82,36 @@ class NFA:
         return states
 
     # It takes a string and returns True if the string is in the language of this NFA
+    # def isStringInLanguage(self, string):
+    #     queue = [(self.states[0], 0)]
+    #     currS = self.states[0]
+    #     pos = 0
+    #     visited = []
+    #     while queue:
+    #         currS, pos = queue.pop()
+    #         if pos == len(string):
+    #             if currS.id in self.is_accepting and self.is_accepting[currS.id]:
+    #                 return self.is_accepting[currS.id]
+    #             for n in self.epsilonClose([currS]):
+    #                 queue.append((n, pos))
+    #             continue
+    #         for s in self.states:
+    #             if s.id == currS.id:
+    #                 if string[pos] in s.transition:
+    #                     stats = s.transition[string[pos]]
+    #                     for stat in stats:
+    #                         queue.extend([(stat,pos+1)])
+    #                         queue.extend([(s,pos+1) for s in self.epsilonClose([stat])])
+    #                 else:
+    #                     for n in self.epsilonClose([currS]):
+    #                         queue.append((n, pos))
+    #                 break
+    #     if pos == len(string):
+    #         return currS.id in self.is_accepting and self.is_accepting[currS.id]
+    #     else:
+    #         return False
+    # pass
+
     def isStringInLanguage(self, string):
         queue = [(self.states[0], 0)]
         currS = self.states[0]
@@ -90,6 +119,7 @@ class NFA:
         visited = []
         while queue:
             currS, pos = queue.pop()
+            print(f"Processing state {currS.id} at position {pos}")
             if pos == len(string):
                 if currS.id in self.is_accepting and self.is_accepting[currS.id]:
                     return self.is_accepting[currS.id]
@@ -101,9 +131,10 @@ class NFA:
                     if string[pos] in s.transition:
                         stats = s.transition[string[pos]]
                         for stat in stats:
-                            queue.extend([(stat,pos+1)])
-                            queue.extend([(s,pos+1) for s in self.epsilonClose([stat])])
+                            queue.extend([(stat, pos + 1)])
+                            queue.extend([(s, pos + 1) for s in self.epsilonClose([stat])])
                     else:
+                        print(f"Error: No transition for symbol {string[pos]} at state {currS.id}")
                         for n in self.epsilonClose([currS]):
                             queue.append((n, pos))
                     break
@@ -111,4 +142,4 @@ class NFA:
             return currS.id in self.is_accepting and self.is_accepting[currS.id]
         else:
             return False
-    pass
+

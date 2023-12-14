@@ -83,9 +83,9 @@ if __name__ == "__main__":
     # testNFA('a', 'ab', False)
 
     # ConcatRegex testing transformtoNFA
-    testNFA('ab', '', False)
+    # testNFA('ab', '', False)
     # testNFA('aba', '', False)
-    testNFA('ab', 'ab', True)
+    # testNFA('ab', 'ab', True)
     # testNFA('ab', 'a', False)
     # testNFA('ab', 'b', False)
     # testNFA('aba', 'aba', True)
@@ -102,8 +102,8 @@ if __name__ == "__main__":
     # testNFA('a*', 'aba', False)
 
     # OrRegex testing transformtoNFA
-    # testNFA('a|b', 'a', True)
-    # testNFA('a|b', 'b', True)
+    testNFA('a|b', 'a', True)
+    testNFA('a|b', 'b', True)
     # testNFA('a|b', '', False)
     # testNFA('a|b', 'c', False)
     
