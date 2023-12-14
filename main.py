@@ -90,8 +90,16 @@ if __name__ == "__main__":
     # testNFA('ab', 'b', False)
     # testNFA('aba', 'aba', True)
     # testNFA('aba', 'ab', False)
-    testNFA('abaa', 'ba', False)
-    testNFA('abaa', 'abaa', True)
+    # testNFA('abaa', 'ba', False)
+    # testNFA('abaa', 'abaa', True)
+
+    # StarRegex testing transformtoNFA
+    # testNFA('a*', '', True)
+    # testNFA('a*', 'b', False)
+    # testNFA('a*', 'a', True)
+    # testNFA('a*', 'aa', True)
+    # testNFA('a*', 'aaa', True)
+    # testNFA('a*', 'aba', False)
 
     #testNFA('a', '', False)
     # testNFA('a', 'a', True)

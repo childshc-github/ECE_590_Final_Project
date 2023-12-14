@@ -32,11 +32,11 @@ class ConcatRegex(Regex):
         nfa1 = self.children[0].transformToNFA()
         nfa2 = self.children[1].transformToNFA()
 
-        # return if either empty
-        if len(nfa1.states) == 0:
-            return nfa2
-        if len(nfa2.states) == 0:
-            return nfa1
+        # # return if either empty
+        # if len(nfa1.states) == 0:
+        #     return nfa2
+        # if len(nfa2.states) == 0:
+        #     return nfa1
         
         # add transitions from NFA1 accept to NFA 2
         NFA1_astates = []
@@ -60,8 +60,21 @@ class StarRegex(Regex):
     def __str__(self):
         return "({})*".format(self.children[0])
     def transformToNFA(self):
-        # FIXME
-        pass
+        # transform to NFA
+        nfa = self.children[0].transformToNFA()
+
+        # update transition
+        nfa.addTransition(nfa.states[0], nfa.states[1], str(self.children[0]))
+        nfa.addTransition(nfa.states[1], nfa.states[1], str(self.children[0]))
+
+        # update alphabet
+        nfa.alphabet = [str(self.children[0])]
+
+        # update accepting
+        nfa.is_accepting = {0 : True, 1 : True}
+
+        return nfa
+        
     pass
 
 class OrRegex(Regex):
@@ -71,9 +84,20 @@ class OrRegex(Regex):
     def __str__(self):
         return "(({})|({}))".format(self.children[0],self.children[1])
     def transformToNFA(self):
-        #FIXME
-        pass
-    pass
+        # create new start node NFA
+        state0 = State(0)
+        nfa0 = NFA()
+        nfa0.states = [state0]
+        nfa0.is_accepting = {0 : False}
+
+        # transform both to NFA
+        nfa1 = self.children[0].transformToNFA()
+        nfa2 = self.children[1].transformToNFA()
+
+        # add trans from start NFA to both NFAs
+        
+        
+        return nfa0
 
 # Sym=symbol
 class SymRegex(Regex):
@@ -92,7 +116,7 @@ class SymRegex(Regex):
         nfa.states = [state0, state1]
         nfa.is_accepting = {0 : False, 1 : True}
         nfa.alphabet = [self.sym]
-        nfa.addTransition(nfa.states[0], nfa.states[1], self.sym)
+        nfa.addTransition(state0, state1, self.sym)
 
         return nfa
     pass
