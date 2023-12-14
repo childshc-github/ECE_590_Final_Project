@@ -25,7 +25,15 @@ class NFA:
     # the first state of the NFA to the other input state of the NFA.
     # need for transformation of ConcatRegex and OrRegex (regex.py) to NFA
     def addTransition(self, s1, s2, sym = '&'):
-        # add trans from s1 -> s2 State (dict)
+        # if sym already in dict, append s2 to set
+        for k, v in s1.transition.items():
+            if k == sym:
+                newv = v.append(s2)
+                s1.transition = {sym : newv}
+                #print(s1.transition)
+                return
+            
+        # else, add trans from s1 -> s2 State (dict)
         s1.transition = {sym : [s2]}
         pass
 
@@ -35,31 +43,29 @@ class NFA:
     # need for transformation of ConcatRegex and OrRegex (regex.py) to NFA
     def addStatesFrom(self, nfa):
         # find length of nfa + increment new NFA ids in dict
-        incr = len(nfa.states)
-        #print("incr is " + str(incr))
+        incr = len(self.states)
 
         # create copy NFA w/ new IDs - avoid memory + overlap ID issues
         cnfa = NFA()
         # update states w/ new incremented IDs
         for s in nfa.states:
             new_id = s.id + incr
-            #print("new_id is " + str(new_id))
             newS = State(new_id)
             newS.transition = s.transition.copy()
             cnfa.states.append(newS)
         # update accepting
         for k, v in nfa.is_accepting.items():
-            #print("k is " + str(k))
-            k = k + incr
-            cnfa.is_accepting[k] = v
+            newk = k + incr
+            newv = v
+            self.is_accepting[newk] = newv
         # update dictionary
         for a in nfa.alphabet:
-            cnfa.alphabet.append(a)
-
+            self.alphabet.append(a)
+        
         # new_dict is not used - included for simplicity
         new_dict = {0 : 0}
 
-        # append cNFA to self 
+        # append cNFA to self
         for s in cnfa.states:
             self.states.append(s)
 

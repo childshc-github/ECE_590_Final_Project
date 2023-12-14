@@ -97,10 +97,11 @@ class OrRegex(Regex):
         # add & trans from start NFA to both NFAs
         nfa0.addTransition(state0, nfa1.states[0])
         nfa0.addTransition(state0, nfa2.states[0])
+        print(state0.transition)
 
         # add NFA1 and 2 to NFA0
-        hold = nfa0.addStatesFrom(nfa1)
-        hold1 = nfa0.addStatesFrom(nfa2)
+        hold1 = nfa0.addStatesFrom(nfa1)
+        hold2 = nfa0.addStatesFrom(nfa2)
         
         return nfa0
 
@@ -139,7 +140,6 @@ class EpsilonRegex(Regex):
 
         nfa.states = [state]
         nfa.is_accepting = {0 : True}
-        #nfa.alphabet = []
 
         return nfa
     pass
