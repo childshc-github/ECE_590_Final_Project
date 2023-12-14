@@ -5,7 +5,7 @@ class State:
     def __init__(self,id):
         # -id = an integer which is used as the unique identifier of the state 
         self.id = id
-        # -transition = a dictionary mapping from (char/symbol + epsilon ) to a set of states (object!)
+        # -transition = a dictionary mapping from (char/symbol + epsilon ) to a set (really mean list) of states (object!)
         self.transition = dict()
         pass
 
