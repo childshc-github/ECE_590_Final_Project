@@ -36,28 +36,32 @@ class NFA:
     def addStatesFrom(self, nfa):
         # find length of nfa + increment new NFA ids in dict
         incr = len(nfa.states)
-        new_dict = {}
+        #print("incr is " + str(incr))
 
+        # create copy NFA w/ new IDs - avoid memory + overlap ID issues
+        cnfa = NFA()
+        # update states w/ new incremented IDs
+        for s in nfa.states:
+            new_id = s.id + incr
+            #print("new_id is " + str(new_id))
+            newS = State(new_id)
+            newS.transition = s.transition.copy()
+            cnfa.states.append(newS)
         # update accepting
         for k, v in nfa.is_accepting.items():
+            #print("k is " + str(k))
             k = k + incr
-            self.is_accepting[k] = v
-        
+            cnfa.is_accepting[k] = v
         # update dictionary
         for a in nfa.alphabet:
-            self.alphabet.append(a)
+            cnfa.alphabet.append(a)
 
-        for s in nfa.states:
-            # create mapping dict
-            holder = s
-            new_id = holder.id + incr
-            new_dict[holder.id] = new_id
+        # new_dict is not used - included for simplicity
+        new_dict = {0 : 0}
 
-            # update nfa key
-            holder.id = new_id
-
-            # append nfa to self
-            self.states.append(holder)
+        # append cNFA to self 
+        for s in cnfa.states:
+            self.states.append(s)
 
         return new_dict
 

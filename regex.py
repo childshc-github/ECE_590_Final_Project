@@ -32,11 +32,11 @@ class ConcatRegex(Regex):
         nfa1 = self.children[0].transformToNFA()
         nfa2 = self.children[1].transformToNFA()
 
-        # # return if either empty
-        # if len(nfa1.states) == 0:
-        #     return nfa2
-        # if len(nfa2.states) == 0:
-        #     return nfa1
+        # return if either empty
+        if len(nfa1.states) == 0:
+            return nfa2
+        if len(nfa2.states) == 0:
+            return nfa1
         
         # add transitions from NFA1 accept to NFA 2
         NFA1_astates = []
@@ -94,8 +94,13 @@ class OrRegex(Regex):
         nfa1 = self.children[0].transformToNFA()
         nfa2 = self.children[1].transformToNFA()
 
-        # add trans from start NFA to both NFAs
-        
+        # add & trans from start NFA to both NFAs
+        nfa0.addTransition(state0, nfa1.states[0])
+        nfa0.addTransition(state0, nfa2.states[0])
+
+        # add NFA1 and 2 to NFA0
+        hold = nfa0.addStatesFrom(nfa1)
+        hold1 = nfa0.addStatesFrom(nfa2)
         
         return nfa0
 
