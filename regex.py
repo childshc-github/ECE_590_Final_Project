@@ -117,7 +117,7 @@ class SymRegex(Regex):
         nfa.states = [state0, state1]
         nfa.is_accepting = {0 : False, 1 : True}
         nfa.alphabet = [self.sym]
-        nfa.addTransition(state0, state1, self.sym)
+        nfa.addTransition(state0, state1, str(self.sym))
 
         return nfa
     pass
