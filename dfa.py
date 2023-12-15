@@ -58,7 +58,7 @@ class DFA:
         for k, v in cdfa.is_accepting.items():
             if v == True:
                 cdfa.is_accepting[k] = False
-            else:
+            elif v == False:
                 cdfa.is_accepting[k] = True
         return cdfa
 

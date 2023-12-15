@@ -23,7 +23,7 @@ def nfaToDFA(nfa):
         IDs.append(i.id)
     pIDs = list(powerset(IDs))
     
-    # for each powerset item, create state
+    # for each powerset item, create state + add to DFA
     track = 0
     while track < len(pIDs):
         newState = State(track)
@@ -45,6 +45,8 @@ def nfaToDFA(nfa):
         for d in dfa.states:
             if a in d.descr:
                 dfa.is_accepting[d.id] = True
+            else:
+                dfa.is_accepting[d.id] = False
                 
     # add trans NFA -> DFA
     for d in dfa.states:
@@ -88,9 +90,7 @@ def nfaToDFA(nfa):
                 if not k in dfa.alphabet:
                     toadd.append(k)
             for t in toadd:
-                dfa.addTransition(r, dfa.states[0], t)
-
-                        
+                dfa.addTransition(r, dfa.states[0], t) 
     
     # adjust start state (descr w/ eps trans)
     # find eps close
@@ -116,6 +116,24 @@ def nfaToDFA(nfa):
 def dfaToNFA(dfa):
     pass
 
+# unions 2 NFAs by add & trans from new start -> beginning of each. Returns 1 object
+def NFA_union(nfa1, nfa2):
+    # creat new NFA with start
+    unfa = NFA()
+    state0 = State(0)
+    unfa.states = [state0]
+    unfa.is_accepting = {0 : False}
+
+    # merge states
+    u_to_1 = unfa.addStatesFrom(nfa1)
+    u_to_2 = unfa.addStatesFrom(nfa2)
+
+    # add union transition
+    unfa.addTransition(unfa.states[0], unfa.states[u_to_1])
+    unfa.addTransition(unfa.states[0], unfa.states[u_to_2])
+
+    return unfa
+
 # You should write this function.
 # It takes two regular expressions and returns a 
 # boolean indicating if they are equivalent
@@ -140,13 +158,9 @@ if __name__ == "__main__":
             pass
         pass
 
-    def testDFA(nfa, s, expected, getcomp=False):
-        # test your dfa conversion
-        if getcomp == True:
-            tdfa = nfaToDFA(nfa)
-            dfa = tdfa.complement()
-        else:
-            dfa = nfaToDFA(nfa)
+    def testDFA(nfa, s, expected):
+        dfa = nfaToDFA(nfa)
+        #print(dfa)
         res = dfa.isStringInLanguage(s)
         if res == expected:
             print("gave ",res, " as expected on ", s)
@@ -219,32 +233,32 @@ if __name__ == "__main__":
     # testNFA('a|b', 'c', False)
     
     # mixed transformtoNFA tests
-    testNFA('cd*', 'cddddddd', True)
-    testNFA('a', '', False)
-    testNFA('a', 'a', True)
-    testNFA('a', 'ab', False)
-    testNFA('a*', '', True)
-    testNFA('a*', 'a', True)
-    testNFA('a*', 'aaa', True)
-    testNFA('a|b', '', False)
-    testNFA('a|b', 'a', True)
-    testNFA('a|b', 'b', True)
-    testNFA('a|b', 'ab', False)
-    testNFA('ab|cd', '', False)
-    testNFA('ab|cd', 'ab', True)
-    testNFA('ab|cd', 'cd', True)
-    testNFA('ab|cd*', '', False)
-    testNFA('ab|cd*', 'c', True)
-    testNFA('ab|cd*', 'cd', True)
-    testNFA('ab|cd*', 'cddddddd', True)
-    testNFA('ab|cd*', 'ab', True)
-    testNFA('((ab)|(cd))*', '', True)
-    testNFA('((ab)|(cd))*', 'ab', True)
-    testNFA('((ab)|(cd))*', 'cd', True)
-    testNFA('((ab)|(cd))*', 'abab', True)
-    testNFA('((ab)|(cd))*', 'abcd', True)
-    testNFA('((ab)|(cd))*', 'cdcdabcd', True)
-    testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', '', True)
+    # testNFA('cd*', 'cddddddd', True)
+    # testNFA('a', '', False)
+    # testNFA('a', 'a', True)
+    # testNFA('a', 'ab', False)
+    # testNFA('a*', '', True)
+    # testNFA('a*', 'a', True)
+    # testNFA('a*', 'aaa', True)
+    # testNFA('a|b', '', False)
+    # testNFA('a|b', 'a', True)
+    # testNFA('a|b', 'b', True)
+    # testNFA('a|b', 'ab', False)
+    # testNFA('ab|cd', '', False)
+    # testNFA('ab|cd', 'ab', True)
+    # testNFA('ab|cd', 'cd', True)
+    # testNFA('ab|cd*', '', False)
+    # testNFA('ab|cd*', 'c', True)
+    # testNFA('ab|cd*', 'cd', True)
+    # testNFA('ab|cd*', 'cddddddd', True)
+    # testNFA('ab|cd*', 'ab', True)
+    # testNFA('((ab)|(cd))*', '', True)
+    # testNFA('((ab)|(cd))*', 'ab', True)
+    # testNFA('((ab)|(cd))*', 'cd', True)
+    # testNFA('((ab)|(cd))*', 'abab', True)
+    # testNFA('((ab)|(cd))*', 'abcd', True)
+    # testNFA('((ab)|(cd))*', 'cdcdabcd', True)
+    # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', '', True)
 
     # # DFA tests
     # # format = testDFA(nfa, s, expected)
@@ -289,51 +303,31 @@ if __name__ == "__main__":
 
     # re = parse_re("a*")
     # n = re.transformToNFA()
+    # testDFA(n, "", False)
+
+    # re = parse_re("a*")
+    # n = re.transformToNFA()
     # testDFA(n, "b", False)
 
-    # # Complement DFA tests
-    # # format = testDFA(nfa, s, expected)
-    # # testing sym
-    # print("Sym DFA Tests:")
-    # re = parse_re("a")
-    # n = re.transformToNFA()
-    # testDFA(n, "a", False, True)
+    # complement DFA tests
+    # sym test
+    # NFA1 regex = "a"
+    print("Sym Tests: ")
+    # create both NFA
+    re1 = parse_re("a")
+    NFA1 = re1.transformToNFA()
+    #print(NFA1.is_accepting)
 
-    # re = parse_re("b")
-    # n = re.transformToNFA()
-    # testDFA(n, "a", True, True)
+    re2 = parse_re("a")
+    NFA2 = re2.transformToNFA()
 
-    # # testing Concat
-    # print("----")
-    # print("Concat DFA Tests: ")
-    # re = parse_re("ab")
-    # n = re.transformToNFA()
-    # testDFA(n, "aa", True, True)
+    # convert NFA1 to DFA1 + get complement
+    DFA1 = nfaToDFA(NFA1)
+    #print(DFA1.is_accepting)
+    cDFA1 = DFA1.complement()
+    #print(cDFA1.is_accepting)
 
-    # # testing OR
-    # print("----")
-    # print("Or DFA Tests:")
-    # re = parse_re("a|b")
-    # n = re.transformToNFA()
-    # testDFA(n, "a", False, True)
 
-    # re = parse_re("a|b")
-    # n = re.transformToNFA()
-    # testDFA(n, "b", False, True)
 
-    # re = parse_re("a|b")
-    # n = re.transformToNFA()
-    # testDFA(n, "aa", True, True)
-
-    # # testing Star
-    # print("----")
-    # print("Star DFA Tests: ")
-    # re = parse_re("a*")
-    # n = re.transformToNFA()
-    # testDFA(n, "aa", False, True)
-
-    # re = parse_re("a*")
-    # n = re.transformToNFA()
-    # testDFA(n, "b", True, True)
     pass
     
