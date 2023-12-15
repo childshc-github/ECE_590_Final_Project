@@ -31,8 +31,9 @@ def nfaToDFA(nfa):
         dfa.states.append(newState)
         track = track + 1
 
-    # add self-loops for empty set
+    # add self-loops for empty set + update dfa alphabet
     for a in nfa.alphabet:
+        dfa.alphabet.append(a)
         dfa.addTransition(dfa.states[0], dfa.states[0], a)
         
     # determine accepts from NFA + adjust DFA
@@ -66,15 +67,34 @@ def nfaToDFA(nfa):
                                 ends_on.append(v2.id)
                 # use goal descr name + sym to make transition in DFA
                 print("Sym " + a + " leads to " + str(ends_on))
-                for f in dfa.states:
-                    if f.descr == ends_on:
-                        end_state = f
-                dfa.addTransition(d, end_state, a)
+                if len(ends_on) > 0:
+                    for f in dfa.states:
+                        if f.descr == ends_on:
+                            end_state = f
+                    dfa.addTransition(d, end_state, a)
+                    print("new transition from " + str(d.descr) + " to " + str(end_state.descr))
+            print("-------")
             # if no trans addded for an alphabet sym, add trans to empty set
 
     # adjust start state (descr w/ eps trans)
+    # find eps close
+    start_eclose = []
+    for k, v in nfa.states[0].transition.items():
+        if k == '&':
+            for v2 in v:
+                start_eclose.append(v2.id)
 
-    print(dfa)
+    #print(dfa)
+    # find index of start_eclose and swap states
+    toswap = 0
+    for g in dfa.states:
+        if g.descr == start_eclose:
+            toswap = g.id
+    dfa.states[0], dfa.states[toswap] = dfa.states[toswap], dfa.states[0]
+    dfa.states[0].id = 0
+    dfa.states[toswap].id = toswap    
+
+    #print(dfa)
     return dfa
 
 # You should write this function.
@@ -110,9 +130,11 @@ if __name__ == "__main__":
         dfa = nfaToDFA(nfa)
         res = dfa.isStringInLanguage(s)
         if res == expected:
-            print(strRe, " gave ",res, " as expected on ", s)
+            print("gave ",res, " as expected on ", s)
+            #print(strRe, " gave ",res, " as expected on ", s)
         else:
-            print("**** ", strRe, " Gave ", res , " on " , s , " but expected " , expected)
+            print("**** Gave", res , " on " , s , " but expected " , expected)
+            #print("**** ", strRe, " Gave ", res , " on " , s , " but expected " , expected)
             pass
         pass
 
@@ -224,5 +246,6 @@ if __name__ == "__main__":
     re = parse_re("a")
     n = re.transformToNFA()
     d = nfaToDFA(n)
+    testDFA(d, "ab", True)
     pass
     

@@ -68,8 +68,8 @@ class DFA:
             if pos == len(string):
                 if currS.id in self.is_accepting and self.is_accepting[currS.id]:
                     return self.is_accepting[currS.id]
-                for n in self.epsilonClose([currS]):
-                    queue.append((n, pos))
+                #for n in self.epsilonClose([currS]):
+                    #queue.append((n, pos))
                 continue
             for s in self.states:
                 if s.id == currS.id:
@@ -77,10 +77,10 @@ class DFA:
                         stats = s.transition[string[pos]]
                         for stat in stats:
                             queue.extend([(stat,pos+1)])
-                            queue.extend([(s,pos+1) for s in self.epsilonClose([stat])])
-                    else:
-                        for n in self.epsilonClose([currS]):
-                            queue.append((n, pos))
+                            #queue.extend([(s,pos+1) for s in self.epsilonClose([stat])])
+                    #else:
+                        #for n in self.epsilonClose([currS]):
+                            #queue.append((n, pos))
                     break
         if pos == len(string):
             return currS.id in self.is_accepting and self.is_accepting[currS.id]
