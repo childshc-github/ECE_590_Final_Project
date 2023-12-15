@@ -139,9 +139,13 @@ if __name__ == "__main__":
             pass
         pass
 
-    def testDFA(nfa, s, expected):
+    def testDFA(nfa, s, expected, getcomp=False):
         # test your dfa conversion
-        dfa = nfaToDFA(nfa)
+        if getcomp == True:
+            tdfa = nfaToDFA(nfa)
+            dfa = tdfa.complement()
+        else:
+            dfa = nfaToDFA(nfa)
         res = dfa.isStringInLanguage(s)
         if res == expected:
             print("gave ",res, " as expected on ", s)
@@ -215,86 +219,95 @@ if __name__ == "__main__":
     
     # mixed transformtoNFA tests
     # testNFA('cd*', 'cddddddd', True)
-    # testNFA('a', '', False)
-    # testNFA('a', 'a', True)
-    # testNFA('a', 'ab', False)
-    # testNFA('a*', '', True)
-    # testNFA('a*', 'a', True)
-    # testNFA('a*', 'aaa', True)
-    # testNFA('a|b', '', False)
-    # testNFA('a|b', 'a', True)
-    # testNFA('a|b', 'b', True)
-    # testNFA('a|b', 'ab', False)
-    # testNFA('ab|cd', '', False)
-    # testNFA('ab|cd', 'ab', True)
-    # testNFA('ab|cd', 'cd', True)
-    # testNFA('ab|cd*', '', False)
-    # testNFA('ab|cd*', 'c', True)
-    # testNFA('ab|cd*', 'cd', True)
-    # testNFA('ab|cd*', 'cddddddd', True)
-    # testNFA('ab|cd*', 'ab', True)
-    # testNFA('((ab)|(cd))*', '', True)
-    # testNFA('((ab)|(cd))*', 'ab', True)
-    # testNFA('((ab)|(cd))*', 'cd', True)
-    # testNFA('((ab)|(cd))*', 'abab', True)
-    # testNFA('((ab)|(cd))*', 'abcd', True)
-    # testNFA('((ab)|(cd))*', 'cdcdabcd', True)
-    # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', '', True)
-    # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'ab', True)
-    # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'abcd', True)
-    # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'cd', True)
-    # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'dfgab', True)
-    # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'defg', True)
-    # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'deeefg', True)
-    # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'hkln', True)
-    # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'q', True)
-    # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'hijijkln', True)
-    # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'hijijklmmmmmmmmmmn', True)
 
+    # # DFA tests
+    # # format = testDFA(nfa, s, expected)
+    # # testing sym
+    # print("Sym DFA Tests:")
+    # re = parse_re("a")
+    # n = re.transformToNFA()
+    # testDFA(n, "a", True)
 
-    # DFA tests
+    # re = parse_re("b")
+    # n = re.transformToNFA()
+    # testDFA(n, "a", False)
+
+    # # testing Concat
+    # print("----")
+    # print("Concat DFA Tests: ")
+    # re = parse_re("ab")
+    # n = re.transformToNFA()
+    # testDFA(n, "aa", False)
+
+    # # testing OR
+    # print("----")
+    # print("Or DFA Tests:")
+    # re = parse_re("a|b")
+    # n = re.transformToNFA()
+    # testDFA(n, "a", True)
+
+    # re = parse_re("a|b")
+    # n = re.transformToNFA()
+    # testDFA(n, "b", True)
+
+    # re = parse_re("a|b")
+    # n = re.transformToNFA()
+    # testDFA(n, "aa", False)
+
+    # # testing Star
+    # print("----")
+    # print("Star DFA Tests: ")
+    # re = parse_re("a*")
+    # n = re.transformToNFA()
+    # testDFA(n, "aa", True)
+
+    # re = parse_re("a*")
+    # n = re.transformToNFA()
+    # testDFA(n, "b", False)
+
+    # Complement DFA tests
     # format = testDFA(nfa, s, expected)
     # testing sym
     print("Sym DFA Tests:")
     re = parse_re("a")
     n = re.transformToNFA()
-    testDFA(n, "a", True)
+    testDFA(n, "a", False, True)
 
     re = parse_re("b")
     n = re.transformToNFA()
-    testDFA(n, "a", False)
+    testDFA(n, "a", True, True)
 
     # testing Concat
     print("----")
     print("Concat DFA Tests: ")
     re = parse_re("ab")
     n = re.transformToNFA()
-    testDFA(n, "aa", False)
+    testDFA(n, "aa", True, True)
 
     # testing OR
     print("----")
     print("Or DFA Tests:")
     re = parse_re("a|b")
     n = re.transformToNFA()
-    testDFA(n, "a", True)
+    testDFA(n, "a", False, True)
 
     re = parse_re("a|b")
     n = re.transformToNFA()
-    testDFA(n, "b", True)
+    testDFA(n, "b", False, True)
 
     re = parse_re("a|b")
     n = re.transformToNFA()
-    testDFA(n, "aa", False)
+    testDFA(n, "aa", True, True)
 
     # testing Star
     print("----")
     print("Star DFA Tests: ")
     re = parse_re("a*")
     n = re.transformToNFA()
-    testDFA(n, "aa", True)
+    testDFA(n, "aa", False, True)
 
     re = parse_re("a*")
     n = re.transformToNFA()
-    testDFA(n, "b", False)
+    testDFA(n, "b", True, True)
     pass
     
