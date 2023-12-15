@@ -70,14 +70,15 @@ class StarRegex(Regex):
 
         # # update accepting
         # nfa.is_accepting = {0 : True, 1 : True}
+
         nfa = NFA()
         sym = str(self.children[0])
         state0 = State(0)
         nfa.states = [state0]
         nfa.is_accepting = {0 : True}
-        nfa.alphabet = sym
+        nfa.alphabet = [sym]
         nfa.addTransition(nfa.states[0], nfa.states[0], sym)
-        #print(nfa)
+        # print(nfa)
 
         return nfa
         
