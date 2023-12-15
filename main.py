@@ -99,8 +99,6 @@ def nfaToDFA(nfa):
         if k == '&':
             for v2 in v:
                 start_eclose.append(v2.id)
-
-    
     # find index of start_eclose and swap states
     toswap = 1
     for g in dfa.states:
@@ -108,9 +106,9 @@ def nfaToDFA(nfa):
             toswap = g.id
     dfa.states[0], dfa.states[toswap] = dfa.states[toswap], dfa.states[0]
     dfa.states[0].id = 0
-    dfa.states[toswap].id = toswap    
+    dfa.states[toswap].id = toswap
 
-    print(dfa)
+    #print(dfa)
     return dfa
 
 # You should write this function.
@@ -257,14 +255,14 @@ if __name__ == "__main__":
     # DFA tests
     # format = testDFA(nfa, s, expected)
     # testing sym
-    # print("Sym DFA Tests:")
-    # re = parse_re("a")
-    # n = re.transformToNFA()
-    # testDFA(n, "a", True)
+    print("Sym DFA Tests:")
+    re = parse_re("a")
+    n = re.transformToNFA()
+    testDFA(n, "a", True)
 
-    # re = parse_re("b")
-    # n = re.transformToNFA()
-    # testDFA(n, "a", False)
+    re = parse_re("b")
+    n = re.transformToNFA()
+    testDFA(n, "a", False)
 
     # testing Concat
     print("----")
@@ -273,38 +271,38 @@ if __name__ == "__main__":
     n = re.transformToNFA()
     testDFA(n, "ab", True)
 
-    # re = parse_re("ab")
-    # n = re.transformToNFA()
-    # testDFA(n, "aa", False)
+    re = parse_re("ab")
+    n = re.transformToNFA()
+    testDFA(n, "aa", False)
 
-    # # testing OR
-    # print("----")
-    # print("Or DFA Tests:")
-    # re = parse_re("a|b")
-    # n = re.transformToNFA()
-    # testDFA(n, "a", True)
+    # testing OR
+    print("----")
+    print("Or DFA Tests:")
+    re = parse_re("a|b")
+    n = re.transformToNFA()
+    testDFA(n, "a", True)
 
-    # re = parse_re("a|b")
-    # n = re.transformToNFA()
-    # testDFA(n, "b", True)
+    re = parse_re("a|b")
+    n = re.transformToNFA()
+    testDFA(n, "b", True)
 
-    # re = parse_re("a|b")
-    # n = re.transformToNFA()
-    # testDFA(n, "aa", False)
+    re = parse_re("a|b")
+    n = re.transformToNFA()
+    testDFA(n, "aa", False)
 
-    # # testing Star
-    # print("----")
-    # print("Star DFA Tests: ")
-    # re = parse_re("a*")
-    # n = re.transformToNFA()
-    # testDFA(n, "aa", True)
+    # testing Star
+    print("----")
+    print("Star DFA Tests: ")
+    re = parse_re("a*")
+    n = re.transformToNFA()
+    testDFA(n, "aa", True)
 
-    # re = parse_re("a*")
-    # n = re.transformToNFA()
-    # testDFA(n, "", True)
+    re = parse_re("a*")
+    n = re.transformToNFA()
+    testDFA(n, "", True)
 
-    # re = parse_re("a*")
-    # n = re.transformToNFA()
-    # testDFA(n, "b", False)
+    re = parse_re("a*")
+    n = re.transformToNFA()
+    testDFA(n, "b", False)
     pass
     

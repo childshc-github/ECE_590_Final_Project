@@ -54,13 +54,12 @@ class DFA:
     # You should write this function.
     # It returns a DFA that is the complement of this DFA
     def complement(self):
-        cdfa = DFA()
-        for k, v in self.is_accepting:
+        cdfa = copy.deepcopy(self)
+        for k, v in cdfa.is_accepting:
             if v == True:
-                self.is_accepting[k] = False
-            elif v == False:
-                self.is_accepting[k] = True
-        
+                cdfa.is_accepting[k] = False
+            else:
+                cdfa.is_accepting[k] = True
         return cdfa
 
     # You should write this function.
