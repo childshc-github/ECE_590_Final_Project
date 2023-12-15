@@ -5,9 +5,11 @@ from nfa import *
 from dfa import *
 
 # You should write this function.
-# It takes an NFA and returns a DFA.
+# It takes an NFA and returns a DFA (new object!)
 def nfaToDFA(nfa):
-    pass
+    dfa = DFA()
+    
+    return dfa
 # You should write this function.
 # It takes an DFA and returns a NFA.
 def dfaToNFA(dfa):
@@ -144,5 +146,12 @@ if __name__ == "__main__":
     # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'q', True)
     # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'hijijkln', True)
     # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'hijijklmmmmmmmmmmn', True)
+
+
+
+
+
+    # DFA test
+    # format = testDFA(nfa, s, expected):
     pass
     

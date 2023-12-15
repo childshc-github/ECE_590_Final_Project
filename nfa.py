@@ -59,16 +59,6 @@ class NFA:
         incr = len(self.states)
         newStates = []
 
-        # # update states + trans w/ new incremented IDs
-        # for s in nfa.states:
-        #     newState = copy.deepcopy(s)
-        #     newState.id = newState.id + incr
-        #     for k, v in newState.transition.items():
-        #         for v2 in v:
-        #             v2.id = v2.id + incr
-        #     newStates.append(newState)
-        # self.states = self.states + newStates
-
         # update states + trans w/ new incremented IDs
         for s in nfa.states:
             newState = s
