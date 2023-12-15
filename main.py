@@ -4,6 +4,7 @@ from state import *
 from nfa import *
 from dfa import *
 from itertools import chain, combinations
+import pandas as pd
 
 # powerset fxn
 def powerset(iterable):
@@ -44,10 +45,24 @@ def nfaToDFA(nfa):
         for d in dfa.states:
             if a in d.descr:
                 dfa.is_accepting[d.id] = True
+    
+    # create transition df
+    ttable = dict()
+    for s in nfa.states:
+        for k, v in s.transition.items():
+            holder = []
+            for v2 in v:
+                holder.append(v2.id)
+            sym = k
+            ttable[sym] = [holder]
+    df = pd.DataFrame(ttable)
 
+    # add df trans to DFA
+    print(df)
 
+    # adjust start state (descr w/ eps trans)
 
-    print(dfa)
+    # print(dfa)
     return dfa
 
 # You should write this function.
@@ -194,7 +209,7 @@ if __name__ == "__main__":
 
     # DFA test
     # format = testDFA(nfa, s, expected)
-    re = parse_re("a")
+    re = parse_re("a|b")
     n = re.transformToNFA()
     d = nfaToDFA(n)
     pass
