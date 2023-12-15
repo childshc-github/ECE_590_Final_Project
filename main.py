@@ -49,18 +49,32 @@ def nfaToDFA(nfa):
     for d in dfa.states:
         # get DFA node name
         actual = d.descr
+        print("actual is : " + str(actual))
         # evaluate each node in node name relative to alphabet (skip empty set)
         if len(actual) > 0:
-            goal = []
-            for i in actual:
-                stateNFA = nfa.states[i]
-                for k, v in stateNFA.transition.items():
-                    sym = k
-            # use goal descr name + sym to make transition in DFA
+            for a in nfa.alphabet:
+                print("sym is " + str(a))
+                ends_on = []
+                for t in actual:
+                    print("current state in actual is " + str(t))
+                    # find trans + update ends_on
+                    for k, v in nfa.states[t].transition.items():
+                        print("Key is " + str(k))
+                        if a == k:
+                            print("key match!")
+                            for v2 in v:
+                                ends_on.append(v2.id)
+                # use goal descr name + sym to make transition in DFA
+                print("Sym " + a + " leads to " + str(ends_on))
+                for f in dfa.states:
+                    if f.descr == ends_on:
+                        end_state = f
+                dfa.addTransition(d, end_state, a)
+            # if no trans addded for an alphabet sym, add trans to empty set
 
     # adjust start state (descr w/ eps trans)
 
-    # print(dfa)
+    print(dfa)
     return dfa
 
 # You should write this function.
