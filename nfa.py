@@ -18,17 +18,29 @@ class NFA:
         self.startS = 0
         pass
     def __str__(self):
-        pass
+        a = []
+        for k, v in self.is_accepting.items():
+            if v == True:
+                a.append(k)
+        hold = ""
+        for s in self.states:
+            n = s.print_state()
+            hold = hold + n
+            for i in a:
+                if s.id == i:
+                    hold = hold + " This node (" + str(i) + ") accepts"
+            hold = hold + "\n"
+        return hold
 
     # You should write this function.
     # It takes two states (object!) and a symbol. It adds a transition from 
     # the first state of the NFA to the other input state of the NFA.
     # need for transformation of ConcatRegex and OrRegex (regex.py) to NFA
     def addTransition(self, s1, s2, sym = '&'):
-        # if sym already in dict, append s2 to set
+        # if sym already in dict, append s2 to list
         for k, v in s1.transition.items():
             if k == sym:
-                v.append(s2)
+                s1.transition[k].append(sym)
                 return
             
         # else, add trans from s1 -> s2 State (dict)
@@ -44,28 +56,21 @@ class NFA:
         incr = len(self.states)
         new_dict = dict()
 
-        # create copy NFA w/ new IDs - avoid memory + overlap ID issues
-        cnfa = NFA()
         # update states w/ new incremented IDs
         for s in nfa.states:
             new_id = s.id + incr
             new_dict[s.id] = new_id
             newS = State(new_id)
-            newS.transition = s.transition.copy()
-            cnfa.states.append(newS)
+            newS.transition = s.transition
+            self.states.append(newS)
         # update accepting
         for k, v in nfa.is_accepting.items():
             newk = k + incr
-            newv = v
-            self.is_accepting[newk] = newv
+            self.is_accepting[newk] = v
         # update dictionary
         for a in nfa.alphabet:
             self.alphabet.append(a)
-
-        # append cNFA to self
-        for s in cnfa.states:
-            self.states.append(s)
-
+        
         return new_dict
 
     # You should write this function.

@@ -16,7 +16,7 @@ class Regex:
         return ans
 
     def transformToNFA(self):
-        # FIXME - should create new object and return it
+        print("Not Implemented")
         pass
     pass
 
@@ -30,24 +30,29 @@ class ConcatRegex(Regex):
         # transform regex -> NFAs
         nfa1 = self.children[0].transformToNFA()
         nfa2 = self.children[1].transformToNFA()
-        
-        # update NFA1 accepts
-        NFA1_astates = []
+
+        # create transition from NFA1 accept -> NFA2 start
+        nfa1_accepts = []
         for k, v in nfa1.is_accepting.items():
             if v == True:
-                NFA1_astates.append(k)
+                # add trans
+                nfa1_accepts.append(k)
+                # update value
                 nfa1.is_accepting[k] = False
-        
-        # add NFA2 to NFA1
-        new_map = nfa1.addStatesFrom(nfa2)
 
-        # add trans based on map
-        for a in NFA1_astates:
-            for k in new_map.keys():
-                if a == k:
-                    nfa1.addTransition(nfa1.states[k], nfa2.states[0])
-        
-        return nfa1
+        # create new NFA object + return
+        new_nfa = NFA()
+        new_to_1 = new_nfa.addStatesFrom(nfa1)
+        new_to_2 = new_nfa.addStatesFrom(nfa2)
+
+        # add epsilon transitions
+        # for a in nfa1_accepts:
+        #     for k, v in new_to_1.items():
+        #         if a == k:
+        #             new_nfa.addTransition(new_nfa)
+        print(new_nfa)
+
+        return new_nfa
 
 class StarRegex(Regex):
     def __init__(self, r1):

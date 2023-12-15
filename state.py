@@ -14,4 +14,14 @@ class State:
         self.transition = copy.deepcopy(s.transition)
     def __str__(self):
         ans = self.id
+    def print_state(self):
+        toprint = "ID: "
+        # print start node
+        toprint = toprint + str(self.id)
+        # print K:V transitions
+        for k, v in self.transition.items():
+            toprint = toprint + " {" + str(k) + ", "
+            for t in v:
+                toprint = toprint + str(t.id) + "}, "
+        return toprint
     pass
