@@ -78,7 +78,6 @@ def nfaToDFA(nfa):
     for r in dfa.states:
         # if no transitions, add to empty
         if len(r.transition) == 0:
-            print(r.transition)
             for q in dfa.alphabet:
                 dfa.addTransition(r, dfa.states[0], q)
         # if some added, add missing alphabet -> empty
@@ -87,6 +86,8 @@ def nfaToDFA(nfa):
             for k, v in r.transition.items():
                 if not k in dfa.alphabet:
                     toadd.append(k)
+            for t in toadd:
+                dfa.addTransition(r, dfa.states[0], t)
 
                         
     
@@ -108,7 +109,7 @@ def nfaToDFA(nfa):
     dfa.states[0].id = 0
     dfa.states[toswap].id = toswap    
 
-    print(dfa)
+    #print(dfa)
     return dfa
 
 # You should write this function.
@@ -252,13 +253,57 @@ if __name__ == "__main__":
     # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'hijijklmmmmmmmmmmn', True)
 
 
-
-
-
-    # DFA test
+    # DFA tests
     # format = testDFA(nfa, s, expected)
+    # testing sym
+    print("Sym DFA Tests:")
     re = parse_re("a")
     n = re.transformToNFA()
     testDFA(n, "a", True)
+
+    re = parse_re("b")
+    n = re.transformToNFA()
+    testDFA(n, "a", False)
+
+    # testing Concat
+    print("----")
+    print("Concat DFA Tests: ")
+    re = parse_re("ab")
+    n = re.transformToNFA()
+    testDFA(n, "ab", True)
+
+    re = parse_re("ab")
+    n = re.transformToNFA()
+    testDFA(n, "aa", False)
+
+    # testing OR
+    print("----")
+    print("Or DFA Tests:")
+    re = parse_re("a|b")
+    n = re.transformToNFA()
+    testDFA(n, "a", True)
+
+    re = parse_re("a|b")
+    n = re.transformToNFA()
+    testDFA(n, "b", True)
+
+    re = parse_re("a|b")
+    n = re.transformToNFA()
+    testDFA(n, "aa", False)
+
+    # testing Star
+    print("----")
+    print("Star DFA Tests: ")
+    re = parse_re("a*")
+    n = re.transformToNFA()
+    testDFA(n, "aa", True)
+
+    re = parse_re("a*")
+    n = re.transformToNFA()
+    testDFA(n, "", True)
+
+    re = parse_re("a*")
+    n = re.transformToNFA()
+    testDFA(n, "b", False)
     pass
     
