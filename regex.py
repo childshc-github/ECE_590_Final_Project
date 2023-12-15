@@ -61,19 +61,19 @@ class StarRegex(Regex):
     def transformToNFA(self):
         # transform to NFA
         nfa = self.children[0].transformToNFA()
-        print(nfa)
 
-        # update transition
-        nfa.addTransition(nfa.states[1], nfa.states[1], str(self.children[0]))
-
-        # add & trans for OR regex
-
-        
+        # add & from accept -> start
+        for k, v in nfa.is_accepting.items():
+            if v == True and k != 0:
+                nfa.addTransition(nfa.states[k], nfa.states[0])
+   
         # update alphabet
-        nfa.alphabet = [str(self.children[0])]
+        for i in str(self.children[0]):
+            if (i != '(') & (i != ')') & (i != '|'):
+                nfa.alphabet.append(i)
 
         # update accepting
-        nfa.is_accepting = {0 : True, 1 : True}
+        nfa.is_accepting[0] = True
 
         #print(nfa)
 
