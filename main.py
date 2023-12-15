@@ -74,6 +74,7 @@ def nfaToDFA(nfa):
                     dfa.addTransition(d, end_state, a)
                     # print("new transition from " + str(d.descr) + " to " + str(end_state.descr))
             # print("-------")
+    
     # if no trans addded for an alphabet sym, add trans to empty set
     for r in dfa.states:
         # if no transitions, add to empty
@@ -93,7 +94,7 @@ def nfaToDFA(nfa):
     
     # adjust start state (descr w/ eps trans)
     # find eps close
-    start_eclose = []
+    start_eclose = [0]
     for k, v in nfa.states[0].transition.items():
         if k == '&':
             for v2 in v:
@@ -101,7 +102,7 @@ def nfaToDFA(nfa):
 
     
     # find index of start_eclose and swap states
-    toswap = 0
+    toswap = 1
     for g in dfa.states:
         if g.descr == start_eclose:
             toswap = g.id
