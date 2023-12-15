@@ -30,6 +30,7 @@ class NFA:
                 if s.id == i:
                     hold = hold + " This node (" + str(i) + ") accepts"
             hold = hold + "\n"
+        hold = hold + "Alphabet: " + str(self.alphabet)
         return hold
 
     # You should write this function.
@@ -51,15 +52,16 @@ class NFA:
     # It takes an nfa, adds all the states from that nfa and returns a 
     # mapping of (state number in old NFA -> state number in this NFA) as a dictionary.
     # need for transformation of ConcatRegex and OrRegex (regex.py) to NFA
+    # NOW RETURNS INCREMENT
     def addStatesFrom(self, nfa):
-        # find length of nfa + increment new NFA ids in dict
+        # find length of nfa
         incr = len(self.states)
-        new_dict = dict()
+        #new_dict = dict()
 
         # update states w/ new incremented IDs
         for s in nfa.states:
             new_id = s.id + incr
-            new_dict[s.id] = new_id
+            #new_dict[s.id] = new_id
             newS = State(new_id)
             newS.transition = s.transition
             self.states.append(newS)
@@ -71,7 +73,7 @@ class NFA:
         for a in nfa.alphabet:
             self.alphabet.append(a)
         
-        return new_dict
+        return incr
 
     # You should write this function.
     # It takes a (actually list of) state and returns the epsilon closure of that state 

@@ -31,7 +31,7 @@ class ConcatRegex(Regex):
         nfa1 = self.children[0].transformToNFA()
         nfa2 = self.children[1].transformToNFA()
 
-        # create transition from NFA1 accept -> NFA2 start
+        # store transition from NFA1 accept -> NFA2 start
         nfa1_accepts = []
         for k, v in nfa1.is_accepting.items():
             if v == True:
@@ -45,11 +45,11 @@ class ConcatRegex(Regex):
         new_to_1 = new_nfa.addStatesFrom(nfa1)
         new_to_2 = new_nfa.addStatesFrom(nfa2)
 
-        # add epsilon transitions
-        # for a in nfa1_accepts:
-        #     for k, v in new_to_1.items():
-        #         if a == k:
-        #             new_nfa.addTransition(new_nfa)
+        # using incr, connect accepts states of nfa1 -> nfa2 in new_nfa
+        for a in nfa1_accepts:
+            newa = a + new_to_1
+            new_nfa.addTransition(new_nfa.states[newa], new_nfa.states[new_to_2])
+
         print(new_nfa)
 
         return new_nfa
