@@ -74,16 +74,21 @@ def nfaToDFA(nfa):
                     dfa.addTransition(d, end_state, a)
                     # print("new transition from " + str(d.descr) + " to " + str(end_state.descr))
             # print("-------")
-            # if no trans addded for an alphabet sym, add trans to empty set
-            for r in dfa.states:
-                # if not transitions, add to empty
-                if len(r.transition) == 0:
-                    
-                # if some added, add missing alphabet -> empty
-                else:
-                    for k, v in r.transition.items():
-                        if not k in nfa.alphabet:
-                            print(k, v)
+    # if no trans addded for an alphabet sym, add trans to empty set
+    for r in dfa.states:
+        # if no transitions, add to empty
+        if len(r.transition) == 0:
+            print(r.transition)
+            for q in dfa.alphabet:
+                dfa.addTransition(r, dfa.states[0], q)
+        # if some added, add missing alphabet -> empty
+        else:
+            toadd = []
+            for k, v in r.transition.items():
+                if not k in dfa.alphabet:
+                    toadd.append(k)
+
+                        
     
     # adjust start state (descr w/ eps trans)
     # find eps close
