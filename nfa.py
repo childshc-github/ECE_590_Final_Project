@@ -22,7 +22,7 @@ class NFA:
         for k, v in self.is_accepting.items():
             if v == True:
                 a.append(k)
-        hold = ""
+        hold = "------------" + "\n"
         for s in self.states:
             n = s.print_state()
             hold = hold + n
@@ -59,13 +59,20 @@ class NFA:
         incr = len(self.states)
         newStates = []
 
+        # # update states + trans w/ new incremented IDs
+        # for s in nfa.states:
+        #     newState = copy.deepcopy(s)
+        #     newState.id = newState.id + incr
+        #     for k, v in newState.transition.items():
+        #         for v2 in v:
+        #             v2.id = v2.id + incr
+        #     newStates.append(newState)
+        # self.states = self.states + newStates
+
         # update states + trans w/ new incremented IDs
         for s in nfa.states:
-            newState = copy.deepcopy(s)
+            newState = s
             newState.id = newState.id + incr
-            for k, v in newState.transition.items():
-                for v2 in v:
-                    v2.id = v2.id + incr
             newStates.append(newState)
         self.states = self.states + newStates
 
