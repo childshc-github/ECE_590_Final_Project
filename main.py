@@ -108,7 +108,7 @@ if __name__ == "__main__":
     # testNFA('a|b', 'c', False)
     
     # mixed transformtoNFA tests
-    # testNFA('cd*', 'cddddddd', True)
+    testNFA('cd*', 'cddddddd', True)
     # testNFA('a', '', False)
     # testNFA('a', 'a', True)
     # testNFA('a', 'ab', False)
@@ -124,7 +124,7 @@ if __name__ == "__main__":
     # testNFA('ab|cd', 'cd', True)
     # testNFA('ab|cd*', '', False)
     # testNFA('ab|cd*', 'c', True)
-    testNFA('ab|cd*', 'cd', True)
+    # testNFA('ab|cd*', 'cd', True)
     # testNFA('ab|cd*', 'cddddddd', True)
     # testNFA('ab|cd*', 'ab', True)
     # testNFA('((ab)|(cd))*', '', True)

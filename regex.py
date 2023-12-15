@@ -59,17 +59,25 @@ class StarRegex(Regex):
     def __str__(self):
         return "({})*".format(self.children[0])
     def transformToNFA(self):
-        # transform to NFA
-        nfa = self.children[0].transformToNFA()
+        # # transform to NFA
+        # nfa = self.children[0].transformToNFA()
 
-        # update transition
-        nfa.addTransition(nfa.states[1], nfa.states[1], str(self.children[0]))
+        # # update transition
+        # nfa.addTransition(nfa.states[1], nfa.states[1], str(self.children[0]))
         
-        # update alphabet
-        nfa.alphabet = [str(self.children[0])]
+        # # update alphabet
+        # nfa.alphabet = [str(self.children[0])]
 
-        # update accepting
-        nfa.is_accepting = {0 : True, 1 : True}
+        # # update accepting
+        # nfa.is_accepting = {0 : True, 1 : True}
+        nfa = NFA()
+        sym = str(self.children[0])
+        state0 = State(0)
+        nfa.states = [state0]
+        nfa.is_accepting = {0 : True}
+        nfa.alphabet = sym
+        nfa.addTransition(nfa.states[0], nfa.states[0], sym)
+        #print(nfa)
 
         return nfa
         
@@ -91,7 +99,6 @@ class OrRegex(Regex):
         # transform both to NFA
         nfa1 = self.children[0].transformToNFA()
         nfa2 = self.children[1].transformToNFA()
-        print(nfa2)
 
         # add NFA1 and NFA2 to NFA0
         nfa0_to_1 = nfa0.addStatesFrom(nfa1)
@@ -100,7 +107,6 @@ class OrRegex(Regex):
         # add transitions based on incr
         nfa0.addTransition(nfa0.states[0], nfa0.states[nfa0_to_1])
         nfa0.addTransition(nfa0.states[0], nfa0.states[nfa0_to_2])
-        print(nfa0)
         
         return nfa0
 
