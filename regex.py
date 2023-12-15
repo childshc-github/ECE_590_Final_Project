@@ -65,7 +65,9 @@ class StarRegex(Regex):
         # add & from accept -> start
         for k, v in nfa.is_accepting.items():
             if v == True and k != 0:
+                #print("adding transition via star from " + str(nfa.states[k].id) + " to " + str(nfa.states[0].id))
                 nfa.addTransition(nfa.states[k], nfa.states[0])
+                
    
         # update alphabet
         for i in str(self.children[0]):
