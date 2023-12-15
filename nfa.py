@@ -41,7 +41,8 @@ class NFA:
         # if sym already in dict, append s2 to list
         for k, v in s1.transition.items():
             if k == sym:
-                s1.transition[k].append(sym)
+                v.append(s2)
+                s1.transition[k] = v
                 return
             
         # else, add trans from s1 -> s2 State (dict)
@@ -75,7 +76,6 @@ class NFA:
         # update dictionary
         for a in nfa.alphabet:
             self.alphabet.append(a)
-        
         return incr
 
     # You should write this function.

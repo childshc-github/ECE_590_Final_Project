@@ -83,15 +83,15 @@ if __name__ == "__main__":
     # testNFA('a', 'ab', False)
 
     # ConcatRegex testing transformtoNFA
-    testNFA('ab', '', False)
-    testNFA('aba', '', False)
-    testNFA('ab', 'ab', True)
-    testNFA('ab', 'a', False)
-    testNFA('ab', 'b', False)
-    testNFA('aba', 'aba', True)
-    testNFA('aba', 'ab', False)
-    testNFA('abaa', 'ba', False)
-    testNFA('abaa', 'abaa', True)
+    # testNFA('ab', '', False)
+    # testNFA('aba', '', False)
+    # testNFA('ab', 'ab', True)
+    # testNFA('ab', 'a', False)
+    # testNFA('ab', 'b', False)
+    # testNFA('aba', 'aba', True)
+    # testNFA('aba', 'ab', False)
+    # testNFA('abaa', 'ba', False)
+    # testNFA('abaa', 'abaa', True)
 
     # StarRegex testing transformtoNFA
     # testNFA('a*', '', True)
@@ -102,10 +102,10 @@ if __name__ == "__main__":
     # testNFA('a*', 'aba', False)
 
     # OrRegex testing transformtoNFA
-    # testNFA('a|b', 'a', True)
-    # testNFA('a|b', 'b', True)
-    # testNFA('a|b', '', False)
-    # testNFA('a|b', 'c', False)
+    testNFA('a|b', 'a', True)
+    testNFA('a|b', 'b', True)
+    testNFA('a|b', '', False)
+    testNFA('a|b', 'c', False)
     
     # mixed transformtoNFA tests
     # testNFA('a', '', False)
