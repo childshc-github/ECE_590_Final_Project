@@ -49,14 +49,14 @@ def nfaToDFA(nfa):
     for d in dfa.states:
         # get DFA node name
         actual = d.descr
-        # for each node in DFA name, update goal (end) DFA node
+        # evaluate each node in node name relative to alphabet (skip empty set)
         if len(actual) > 0:
             goal = []
             for i in actual:
                 stateNFA = nfa.states[i]
                 for k, v in stateNFA.transition.items():
                     sym = k
-            # use goal descr name to make transition
+            # use goal descr name + sym to make transition in DFA
 
     # adjust start state (descr w/ eps trans)
 
