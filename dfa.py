@@ -54,7 +54,14 @@ class DFA:
     # You should write this function.
     # It returns a DFA that is the complement of this DFA
     def complement(self):
-        pass
+        cdfa = DFA()
+        for k, v in self.is_accepting:
+            if v == True:
+                self.is_accepting[k] = False
+            elif v == False:
+                self.is_accepting[k] = True
+        
+        return cdfa
 
     # You should write this function.
     # It takes a string and returns True if the string is in the language of this DFA
