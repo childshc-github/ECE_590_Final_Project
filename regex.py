@@ -49,7 +49,7 @@ class ConcatRegex(Regex):
         for a in nfa1_accepts:
             newa = a + new_to_1
             new_nfa.addTransition(new_nfa.states[newa], new_nfa.states[new_to_2])
-        
+        #print(new_nfa)
         return new_nfa
 
 class StarRegex(Regex):

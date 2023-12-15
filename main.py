@@ -3,17 +3,58 @@ from regex import *
 from state import * 
 from nfa import *
 from dfa import *
+from itertools import chain, combinations
+
+# powerset fxn
+def powerset(iterable):
+    s = list(iterable)
+    return chain.from_iterable(combinations(s, r) for r in range(len(s)+1))
 
 # You should write this function.
 # It takes an NFA and returns a DFA (new object!)
 def nfaToDFA(nfa):
+    # storage
     dfa = DFA()
+    IDs = []
+
+    # create all possible states
+    # get IDs
+    for i in nfa.states:
+        IDs.append(i.id)
+    pIDs = list(powerset(IDs))
     
+    # for each powerset item, create state
+    track = 0
+    while track < len(pIDs):
+        newState = State(track)
+        newState.descr = list(pIDs[track])
+        dfa.states.append(newState)
+        track = track + 1
+
+    # add self-loops for empty set
+    for a in nfa.alphabet:
+        dfa.addTransition(dfa.states[0], dfa.states[0], a)
+        
+    # determine accepts from NFA + adjust DFA
+    NFA_accepts = []
+    for k, v in nfa.is_accepting.items():
+        if v == True:
+            NFA_accepts.append(k)
+    for a in NFA_accepts:
+        for d in dfa.states:
+            if a in d.descr:
+                dfa.is_accepting[d.id] = True
+
+
+
+    print(dfa)
     return dfa
+
 # You should write this function.
 # It takes an DFA and returns a NFA.
 def dfaToNFA(dfa):
     pass
+
 # You should write this function.
 # It takes two regular expressions and returns a 
 # boolean indicating if they are equivalent
@@ -152,6 +193,9 @@ if __name__ == "__main__":
 
 
     # DFA test
-    # format = testDFA(nfa, s, expected):
+    # format = testDFA(nfa, s, expected)
+    re = parse_re("a")
+    n = re.transformToNFA()
+    d = nfaToDFA(n)
     pass
     

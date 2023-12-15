@@ -7,6 +7,7 @@ class State:
         self.id = id
         # -transition = a dictionary mapping from (char/symbol + epsilon ) to a set (really mean list) of states (object!)
         self.transition = dict()
+        self.descr = list()
         pass
 
     def copy(self, s):
@@ -17,7 +18,7 @@ class State:
     def print_state(self):
         toprint = "ID: "
         # print start node
-        toprint = toprint + str(self.id)
+        toprint = toprint + str(self.id) + ", Descr: " + str(self.descr) + ", Trans:"
         # print K:V transitions
         for k, v in self.transition.items():
             toprint = toprint + " {" + str(k) + ", "
