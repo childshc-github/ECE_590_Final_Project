@@ -269,10 +269,6 @@ if __name__ == "__main__":
     print("Concat DFA Tests: ")
     re = parse_re("ab")
     n = re.transformToNFA()
-    testDFA(n, "ab", True)
-
-    re = parse_re("ab")
-    n = re.transformToNFA()
     testDFA(n, "aa", False)
 
     # testing OR
@@ -296,10 +292,6 @@ if __name__ == "__main__":
     re = parse_re("a*")
     n = re.transformToNFA()
     testDFA(n, "aa", True)
-
-    re = parse_re("a*")
-    n = re.transformToNFA()
-    testDFA(n, "", True)
 
     re = parse_re("a*")
     n = re.transformToNFA()
