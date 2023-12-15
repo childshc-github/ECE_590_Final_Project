@@ -7,6 +7,7 @@ class State:
         self.id = id
         # -transition = a dictionary mapping from (char/symbol + epsilon ) to a set (really mean list) of states (object!)
         self.transition = dict()
+        self.already_incr = False
         pass
 
     def copy(self, s):

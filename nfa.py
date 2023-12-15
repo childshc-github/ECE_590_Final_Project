@@ -63,12 +63,15 @@ class NFA:
         for s in nfa.states:
             newState = copy.deepcopy(s)
             newState.id = newState.id + incr
+            newState.already_incr = True
             for k, v in newState.transition.items():
                 for v2 in v:
-                    v2.id = v2.id + incr
+                    if v2.already_incr == False:
+                        v2.id = v2.id + incr
+                        #v2.already_incr = True
             newStates.append(newState)
-        # add holding list to self
         self.states = self.states + newStates
+
         # update accepting
         for k, v in nfa.is_accepting.items():
             newk = k + incr
@@ -76,6 +79,7 @@ class NFA:
         # update dictionary
         for a in nfa.alphabet:
             self.alphabet.append(a)
+
         return incr
 
     # You should write this function.

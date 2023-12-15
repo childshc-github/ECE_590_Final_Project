@@ -49,7 +49,7 @@ class ConcatRegex(Regex):
         for a in nfa1_accepts:
             newa = a + new_to_1
             new_nfa.addTransition(new_nfa.states[newa], new_nfa.states[new_to_2])
-
+        
         return new_nfa
 
 class StarRegex(Regex):
@@ -91,6 +91,7 @@ class OrRegex(Regex):
         # transform both to NFA
         nfa1 = self.children[0].transformToNFA()
         nfa2 = self.children[1].transformToNFA()
+        print(nfa2)
 
         # add NFA1 and NFA2 to NFA0
         nfa0_to_1 = nfa0.addStatesFrom(nfa1)
@@ -99,7 +100,7 @@ class OrRegex(Regex):
         # add transitions based on incr
         nfa0.addTransition(nfa0.states[0], nfa0.states[nfa0_to_1])
         nfa0.addTransition(nfa0.states[0], nfa0.states[nfa0_to_2])
-        #print(nfa0)
+        print(nfa0)
         
         return nfa0
 
