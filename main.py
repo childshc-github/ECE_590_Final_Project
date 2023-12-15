@@ -50,32 +50,32 @@ def nfaToDFA(nfa):
     for d in dfa.states:
         # get DFA node name
         actual = d.descr
-        print("actual is : " + str(actual))
+        # print("actual is : " + str(actual))
         # evaluate each node in node name relative to alphabet (skip empty set)
         if len(actual) > 0:
             for a in nfa.alphabet:
-                print("sym is " + str(a))
+                # print("sym is " + str(a))
                 ends_on = []
                 for t in actual:
-                    print("current state in actual is " + str(t))
+                    # print("current state in actual is " + str(t))
                     # find trans + update ends_on
                     for k, v in nfa.states[t].transition.items():
-                        print("Key is " + str(k))
+                        # print("Key is " + str(k))
                         if a == k:
-                            print("key match!")
+                            # print("key match!")
                             for v2 in v:
                                 ends_on.append(v2.id)
                 # use goal descr name + sym to make transition in DFA
-                print("Sym " + a + " leads to " + str(ends_on))
+                # print("Sym " + a + " leads to " + str(ends_on))
                 if len(ends_on) > 0:
                     for f in dfa.states:
                         if f.descr == ends_on:
                             end_state = f
                     dfa.addTransition(d, end_state, a)
-                    print("new transition from " + str(d.descr) + " to " + str(end_state.descr))
-            print("-------")
+                    # print("new transition from " + str(d.descr) + " to " + str(end_state.descr))
+            # print("-------")
             # if no trans addded for an alphabet sym, add trans to empty set
-
+    
     # adjust start state (descr w/ eps trans)
     # find eps close
     start_eclose = []
@@ -84,7 +84,7 @@ def nfaToDFA(nfa):
             for v2 in v:
                 start_eclose.append(v2.id)
 
-    #print(dfa)
+    
     # find index of start_eclose and swap states
     toswap = 0
     for g in dfa.states:
@@ -94,7 +94,7 @@ def nfaToDFA(nfa):
     dfa.states[0].id = 0
     dfa.states[toswap].id = toswap    
 
-    #print(dfa)
+    print(dfa)
     return dfa
 
 # You should write this function.
@@ -245,7 +245,6 @@ if __name__ == "__main__":
     # format = testDFA(nfa, s, expected)
     re = parse_re("a")
     n = re.transformToNFA()
-    d = nfaToDFA(n)
-    testDFA(d, "ab", True)
+    testDFA(n, "a", True)
     pass
     
