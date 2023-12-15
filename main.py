@@ -102,10 +102,10 @@ if __name__ == "__main__":
     # testNFA('a*', 'aba', False)
 
     # OrRegex testing transformtoNFA
-    testNFA('a|b', 'a', True)
-    testNFA('a|b', 'b', True)
-    testNFA('a|b', '', False)
-    testNFA('a|b', 'c', False)
+    # testNFA('a|b', 'a', True)
+    # testNFA('a|b', 'b', True)
+    # testNFA('a|b', '', False)
+    # testNFA('a|b', 'c', False)
     
     # mixed transformtoNFA tests
     # testNFA('a', '', False)
@@ -124,7 +124,7 @@ if __name__ == "__main__":
     # testNFA('ab|cd*', '', False)
     # testNFA('ab|cd*', 'c', True)
     # testNFA('ab|cd*', 'cd', True)
-    # testNFA('ab|cd*', 'cddddddd', True)
+    testNFA('ab|cd*', 'cddddddd', True)
     # testNFA('ab|cd*', 'ab', True)
     # testNFA('((ab)|(cd))*', '', True)
     # testNFA('((ab)|(cd))*', 'ab', True)
