@@ -56,15 +56,18 @@ class NFA:
     def addStatesFrom(self, nfa):
         # find length of nfa
         incr = len(self.states)
-        #new_dict = dict()
+        newStates = []
 
-        # update states w/ new incremented IDs
+        # update states + trans w/ new incremented IDs
         for s in nfa.states:
-            new_id = s.id + incr
-            #new_dict[s.id] = new_id
-            newS = State(new_id)
-            newS.transition = s.transition
-            self.states.append(newS)
+            newState = copy.deepcopy(s)
+            newState.id = newState.id + incr
+            for k, v in newState.transition.items():
+                for v2 in v:
+                    v2.id = v2.id + incr
+            newStates.append(newState)
+        # add holding list to self
+        self.states = self.states + newStates
         # update accepting
         for k, v in nfa.is_accepting.items():
             newk = k + incr
