@@ -134,7 +134,7 @@ if __name__ == "__main__":
     # testNFA('((ab)|(cd))*', 'abcd', True)
     # testNFA('((ab)|(cd))*', 'cdcdabcd', True)
     # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', '', True)
-    testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'ab', True)
+    # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'ab', True)
     # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'abcd', True)
     # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'cd', True)
     # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', 'dfgab', True)

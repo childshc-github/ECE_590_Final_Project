@@ -75,8 +75,6 @@ class StarRegex(Regex):
         # update accepting
         nfa.is_accepting[0] = True
 
-        #print(nfa)
-
         return nfa
         
     pass
@@ -106,7 +104,7 @@ class OrRegex(Regex):
         nfa0.addTransition(nfa0.states[0], nfa0.states[nfa0_to_1])
         nfa0.addTransition(nfa0.states[0], nfa0.states[nfa0_to_2])
         
-        #print(nfa0)
+        print(nfa0)
         return nfa0
 
 # Sym=symbol
