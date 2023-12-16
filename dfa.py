@@ -122,7 +122,6 @@ class DFA:
     def shortestString(self):
         # tracker
         at_accept = False
-        ss = ""
 
         # create list of accept IDs
         accepts = []
@@ -130,21 +129,23 @@ class DFA:
             if v == True:
                 accepts.append(k)
 
-        # start by putting start state in queue
-        queue = [self.states[0]]
+        # start by putting start state + ss in queue
+        queue = [[self.states[0], ""]]
         visited = []
 
         # until reach an accept state, find shortest string
         while at_accept == False:
-            curr = queue.pop(0)
+            holder = queue.pop(0)
+            curr, path = holder.items()
             print("Checking " + str(curr.descr))
+            print("Path is " + path)
             if curr.id in accepts:
                 at_accept = True
             if not curr in visited:
                 visited.append(curr)
                 for k, v in curr.transition.items():
                     for v2 in v:
-                        queue.append(v2)
+                        queue.append([v2, FIXME])
 
 
     pass
