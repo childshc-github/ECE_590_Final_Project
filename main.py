@@ -336,6 +336,8 @@ if __name__ == "__main__":
     cNFA1 = dfaToNFA(cDFA1)
     
     # union cNFA1 to NFA2
+    uNFA = NFA_union(cNFA1, NFA2)
+    #testDFA(uNFA)
 
 
 
