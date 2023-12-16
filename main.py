@@ -169,27 +169,37 @@ def equivalent(re1, re2):
 
     # create NFA1
     nfa1 = re1.transformToNFA()
-    print(nfa1)
 
     # create NFA2
     nfa2 = re2.transformToNFA()
-    print(nfa2)
 
-    # convert NFA1 to DFA1 + get complement + convert complement -> NFA
-    DFA1 = nfaToDFA(NFA1)
-    cDFA1 = DFA1.complement()
-    cNFA1 = dfaToNFA(cDFA1)
-    
-    # union cNFA1 to NFA2
-    uNFA = NFA_union(cNFA1, NFA2)
-    
-    # convert union -> DFA and take compliment
-    D_NFA = nfaToDFA(uNFA)
-    cD_NFA = D_NFA.complement()
+    # get complement of nfa1 and nfa2
+    dfa1 = nfaToDFA(nfa1)
+    cdfa1 = dfa1.complement()
+    cnfa1 = dfaToNFA(cdfa1)
+    dfa2 = nfaToDFA(nfa2)
+    cdfa2 = dfa2.complement()
+    cnfa2 = dfaToNFA(cdfa2)
+
+    # union of cNFA1 to NFA2
+    union_c1_2 = NFA_union(cnfa1, nfa2)
+
+    # union of NFA1 to cNFA2
+    union_1_c2 = NFA_union(nfa1, cnfa2)
+
+    # complement of union cNFA1 to NFA2
+    d_c1_2 = nfaToDFA(union_c1_2)
+    cd_c1_2 = d_c1_2.complement()
+
+    # complement of union NFA1 to cNFA2
+    d_1_c2 = nfaToDFA(union_1_c2)
+    cd_1_c2 = nfaToDFA(d_1_c2)
     
     # determine if any string accepts (emptiness)
-    answer = cD_NFA.shortestString()
-    print(answer)
+    answer1 = cd_c1_2.shortestString()
+    answer2 = cd_1_c2.shortestString()
+    if answer1 == answer2:
+        are_equiv = True
     
     return are_equiv
 
@@ -381,7 +391,7 @@ if __name__ == "__main__":
     # complement + equivalence DFA tests
     # Sym test
     # NFA1/2 regex = "a" (equiv)
-    
+    testEquivalence("a", "a", True)
     
 
 
