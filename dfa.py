@@ -39,7 +39,7 @@ class DFA:
     # You should write this function.
     # It takes two states and a symbol/char. It adds a transition from 
     # the first state of the DFA to the other input state of the DFA.
-    def addTransition(self, s1, s2, sym):
+    def addTransition(self, s1, s2, sym='&'):
         # if sym already in dict, append s2 to list
         for k, v in s1.transition.items():
             if k == sym:
@@ -49,7 +49,30 @@ class DFA:
             
         # else, add trans from s1 -> s2 State (dict)
         s1.transition[sym] = [s2]
-        pass 
+        pass
+
+    def addStatesFrom(self, nfa):
+        # find length of nfa
+        incr = len(self.states)
+        newStates = []
+
+        # update states + trans w/ new incremented IDs
+        for s in nfa.states:
+            newState = s
+            newState.id = newState.id + incr
+            newState.descr = []
+            newStates.append(newState)
+        self.states = self.states + newStates
+
+        # update accepting
+        for k, v in nfa.is_accepting.items():
+            newk = k + incr
+            self.is_accepting[newk] = v
+        # update dictionary
+        for a in nfa.alphabet:
+            self.alphabet.append(a)
+
+        return incr
 
     # You should write this function.
     # It returns a DFA that is the complement of this DFA

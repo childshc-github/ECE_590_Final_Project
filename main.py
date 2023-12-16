@@ -114,7 +114,17 @@ def nfaToDFA(nfa):
 # You should write this function.
 # It takes an DFA and returns a NFA.
 def dfaToNFA(dfa):
-    pass
+    # create DFA w/ start state
+    ndfa = DFA()
+    state0 = State(0)
+    ndfa.states = [state0]
+    ndfa.is_accepting = {0 : False}
+
+    # merge states + add &
+    incr = ndfa.addStatesFrom(dfa)
+    ndfa.addTransition(ndfa.states[0], ndfa.states[incr])
+
+    return ndfa
 
 # unions 2 NFAs by add & trans from new start -> beginning of each. Returns 1 object
 def NFA_union(nfa1, nfa2):
@@ -316,16 +326,16 @@ if __name__ == "__main__":
     # create both NFA
     re1 = parse_re("a")
     NFA1 = re1.transformToNFA()
-    #print(NFA1.is_accepting)
 
     re2 = parse_re("a")
     NFA2 = re2.transformToNFA()
 
-    # convert NFA1 to DFA1 + get complement
+    # convert NFA1 to DFA1 + get complement + convert complement -> NFA
     DFA1 = nfaToDFA(NFA1)
-    #print(DFA1.is_accepting)
     cDFA1 = DFA1.complement()
-    #print(cDFA1.is_accepting)
+    cNFA1 = dfaToNFA(cDFA1)
+    
+    # union cNFA1 to NFA2
 
 
 
