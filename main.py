@@ -319,7 +319,7 @@ if __name__ == "__main__":
     # n = re.transformToNFA()
     # testDFA(n, "b", False)
 
-    # complement DFA tests
+    # complement + equivalence DFA tests
     # sym test
     # NFA1 regex = "a"
     print("Sym Tests: ")
@@ -327,18 +327,28 @@ if __name__ == "__main__":
     re1 = parse_re("a")
     NFA1 = re1.transformToNFA()
 
-    re2 = parse_re("a")
-    NFA2 = re2.transformToNFA()
+    # re2 = parse_re("a")
+    # NFA2 = re2.transformToNFA()
 
-    # convert NFA1 to DFA1 + get complement + convert complement -> NFA
-    DFA1 = nfaToDFA(NFA1)
-    cDFA1 = DFA1.complement()
-    cNFA1 = dfaToNFA(cDFA1)
+    # # convert NFA1 to DFA1 + get complement + convert complement -> NFA
+    # DFA1 = nfaToDFA(NFA1)
+    # cDFA1 = DFA1.complement()
+    # cNFA1 = dfaToNFA(cDFA1)
     
-    # union cNFA1 to NFA2
-    uNFA = NFA_union(cNFA1, NFA2)
-    #testDFA(uNFA)
+    # # union cNFA1 to NFA2
+    # uNFA = NFA_union(cNFA1, NFA2)
+    
+    # # convert union -> DFA and take compliment
+    # D_NFA = nfaToDFA(uNFA)
+    # cD_NFA = D_NFA.complement()
+    
+    # # determine if any string accepts (emptiness)
+    # answer = cD_NFA.shortestString()
+    # print(answer)
 
+    test = nfaToDFA(NFA1)
+    answer = test.shortestString()
+    print(answer)
 
 
     pass
