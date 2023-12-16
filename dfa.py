@@ -128,24 +128,36 @@ class DFA:
         for k, v in self.is_accepting.items():
             if v == True:
                 accepts.append(k)
+        
+        # if start node is accept, ss = "" FIXME
+        
 
-        # start by putting start state + ss in queue
+        # start by putting start state + empty path in queue
         queue = [[self.states[0], ""]]
         visited = []
 
         # until reach an accept state, find shortest string
         while at_accept == False:
-            holder = queue.pop(0)
-            curr, path = holder.items()
-            print("Checking " + str(curr.descr))
-            print("Path is " + path)
+            # get current node
+            curr, path = queue[0]
+
+            # update queue
+            queue.pop(0)
+            #print("Checking " + str(curr.descr))
+            #print("Path is " + path)
+
+            # if current is an accept, don't loop again
             if curr.id in accepts:
                 at_accept = True
+                return path
+
+            # for all edges on curr, add to queue
             if not curr in visited:
                 visited.append(curr)
                 for k, v in curr.transition.items():
                     for v2 in v:
-                        queue.append([v2, FIXME])
+                        new_path = path + k
+                        queue.append([v2, new_path])
 
 
     pass

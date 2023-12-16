@@ -40,13 +40,13 @@ def nfaToDFA(nfa):
     NFA_accepts = []
     for k, v in nfa.is_accepting.items():
         if v == True:
+            #print(str(k) + " is an accept")
             NFA_accepts.append(k)
     for a in NFA_accepts:
         for d in dfa.states:
             if a in d.descr:
+                #print("Update " + str(d.descr) + " to true")
                 dfa.is_accepting[d.id] = True
-            else:
-                dfa.is_accepting[d.id] = False
                 
     # add trans NFA -> DFA
     for d in dfa.states:
@@ -101,12 +101,28 @@ def nfaToDFA(nfa):
                 start_eclose.append(v2.id)
     # find index of start_eclose and swap states
     toswap = 1
+    toswap_accept = State(0)
     for g in dfa.states:
         if g.descr == start_eclose:
             toswap = g.id
+            toswap_accept = g
+    # get accept of start and toswap
+    start_accept = False
+    swap_accept = False
+    for k, v in dfa.is_accepting.items():
+        # get start
+        if k == 0:
+            start_accept = v
+        # get swap
+        elif k == toswap:
+            swap_accept = v
+    
+    # swap states + update accepts
     dfa.states[0], dfa.states[toswap] = dfa.states[toswap], dfa.states[0]
     dfa.states[0].id = 0
     dfa.states[toswap].id = toswap
+    dfa.is_accepting[0] = swap_accept
+    dfa.is_accepting[toswap] = start_accept
 
     #print(dfa)
     return dfa
@@ -148,7 +164,34 @@ def NFA_union(nfa1, nfa2):
 # It takes two regular expressions and returns a 
 # boolean indicating if they are equivalent
 def equivalent(re1, re2):
-    pass
+    # boolean tracker
+    are_equiv = False
+
+    # create NFA1
+    nfa1 = re1.transformToNFA()
+    print(nfa1)
+
+    # create NFA2
+    nfa2 = re2.transformToNFA()
+    print(nfa2)
+
+    # convert NFA1 to DFA1 + get complement + convert complement -> NFA
+    DFA1 = nfaToDFA(NFA1)
+    cDFA1 = DFA1.complement()
+    cNFA1 = dfaToNFA(cDFA1)
+    
+    # union cNFA1 to NFA2
+    uNFA = NFA_union(cNFA1, NFA2)
+    
+    # convert union -> DFA and take compliment
+    D_NFA = nfaToDFA(uNFA)
+    cD_NFA = D_NFA.complement()
+    
+    # determine if any string accepts (emptiness)
+    answer = cD_NFA.shortestString()
+    print(answer)
+    
+    return are_equiv
 
 
 
@@ -305,50 +348,41 @@ if __name__ == "__main__":
     # testDFA(n, "aa", False)
 
     # # testing Star
-    # print("----")
-    # print("Star DFA Tests: ")
     # re = parse_re("a*")
     # n = re.transformToNFA()
-    # testDFA(n, "aa", True)
-
-    # re = parse_re("a*")
-    # n = re.transformToNFA()
-    # testDFA(n, "", False)
+    # testDFA(n, "", True)
 
     # re = parse_re("a*")
     # n = re.transformToNFA()
     # testDFA(n, "b", False)
 
+    # # shortest string check
+    # # check SYM
+    # re1 = parse_re("a")
+    # NFA1 = re1.transformToNFA()
+    # test = nfaToDFA(NFA1)
+    # answer = test.shortestString()
+    # print("SS is " + answer + " and should be a")
+
+    # # check OR
+    # re1 = parse_re("a|b")
+    # NFA1 = re1.transformToNFA()
+    # test = nfaToDFA(NFA1)
+    # answer = test.shortestString()
+    # print("SS is " + answer + " and should be a (b ok too)")
+
+    # # check Star
+    # re1 = parse_re("a*")
+    # NFA1 = re1.transformToNFA()
+    # test = nfaToDFA(NFA1)
+    # answer = test.shortestString()
+    # print("SS is " + answer + " and should be empty")
+
     # complement + equivalence DFA tests
-    # sym test
-    # NFA1 regex = "a"
-    print("Sym Tests: ")
-    # create both NFA
-    re1 = parse_re("a")
-    NFA1 = re1.transformToNFA()
-
-    # re2 = parse_re("a")
-    # NFA2 = re2.transformToNFA()
-
-    # # convert NFA1 to DFA1 + get complement + convert complement -> NFA
-    # DFA1 = nfaToDFA(NFA1)
-    # cDFA1 = DFA1.complement()
-    # cNFA1 = dfaToNFA(cDFA1)
+    # Sym test
+    # NFA1/2 regex = "a" (equiv)
     
-    # # union cNFA1 to NFA2
-    # uNFA = NFA_union(cNFA1, NFA2)
     
-    # # convert union -> DFA and take compliment
-    # D_NFA = nfaToDFA(uNFA)
-    # cD_NFA = D_NFA.complement()
-    
-    # # determine if any string accepts (emptiness)
-    # answer = cD_NFA.shortestString()
-    # print(answer)
-
-    test = nfaToDFA(NFA1)
-    answer = test.shortestString()
-    print(answer)
 
 
     pass
