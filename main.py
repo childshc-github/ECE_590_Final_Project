@@ -169,12 +169,13 @@ def equivalent(re1, re2):
     # boolean tracker
     are_equiv = False
 
-    print(type(re1))
-    print(re2)
-    if re1 == re2:
+    r1 = repr(re1)
+    r2 = repr(re2)
+    if r1 == r2:
         are_equiv = True
         return are_equiv
-    print("here")
+    else:
+        return are_equiv
     # create NFA1
     nfa1 = re1.transformToNFA()
 
@@ -256,7 +257,7 @@ if __name__ == "__main__":
         if res == expected:
             print("Equivalence(", strRe1, ", ",strRe2, ") = ", res, " as expected.")
         else:
-            print("Equivalence(", strRe1, ", ",strRe2, ") = ", res, " but expected " , expected)
+            print("**** Equivalence(", strRe1, ", ",strRe2, ") = ", res, " but expected " , expected)
             pass
         pass
 
@@ -271,140 +272,145 @@ if __name__ == "__main__":
     #test your NFA:
     # format = testNFA(RE, input string, expected)
 
-    # my NFA
+    # my NFA test
     # EpsilonRegex testing transformtoNFA
-    # testNFA('&', '', True)
-    # testNFA('&', 'a', False)
-    # testNFA('&', ' ', False)
-    # testNFA('&', 'ab', False)
+    testNFA('&', '', True)
+    testNFA('&', 'a', False)
+    testNFA('&', ' ', False)
+    testNFA('&', 'ab', False)
 
     # SymRegex testing transformtoNFA
-    # testNFA('a', 'a', True)
-    # testNFA('b', 'b', True)
-    # testNFA('a', 'b', False)
-    # testNFA('a', 'ab', False)
+    testNFA('a', 'a', True)
+    testNFA('b', 'b', True)
+    testNFA('a', 'b', False)
+    testNFA('a', 'ab', False)
 
     # ConcatRegex testing transformtoNFA
-    # testNFA('ab', '', False)
-    # testNFA('aba', '', False)
-    # testNFA('ab', 'ab', True)
-    # testNFA('ab', 'a', False)
-    # testNFA('ab', 'b', False)
-    # testNFA('aba', 'aba', True)
-    # testNFA('aba', 'ab', False)
-    # testNFA('abaa', 'ba', False)
-    # testNFA('abaa', 'abaa', True)
+    testNFA('ab', '', False)
+    testNFA('aba', '', False)
+    testNFA('ab', 'ab', True)
+    testNFA('ab', 'a', False)
+    testNFA('ab', 'b', False)
+    testNFA('aba', 'aba', True)
+    testNFA('aba', 'ab', False)
+    testNFA('abaa', 'ba', False)
+    testNFA('abaa', 'abaa', True)
 
     # StarRegex testing transformtoNFA
-    # testNFA('a*', '', True)
-    # testNFA('a*', 'b', False)
-    # testNFA('a*', 'a', True)
-    # testNFA('a*', 'aa', True)
-    # testNFA('a*', 'aaa', True)
-    # testNFA('a*', 'aba', False)
+    testNFA('a*', '', True)
+    testNFA('a*', 'b', False)
+    testNFA('a*', 'a', True)
+    testNFA('a*', 'aa', True)
+    testNFA('a*', 'aaa', True)
+    testNFA('a*', 'aba', False)
 
     # OrRegex testing transformtoNFA
-    # testNFA('a|b', 'a', True)
-    # testNFA('a|b', 'b', True)
-    # testNFA('a|b', '', False)
-    # testNFA('a|b', 'c', False)
+    testNFA('a|b', 'a', True)
+    testNFA('a|b', 'b', True)
+    testNFA('a|b', '', False)
+    testNFA('a|b', 'c', False)
     
     # mixed transformtoNFA tests
-    # testNFA('cd*', 'cddddddd', True)
-    # testNFA('a', '', False)
-    # testNFA('a', 'a', True)
-    # testNFA('a', 'ab', False)
-    # testNFA('a*', '', True)
-    # testNFA('a*', 'a', True)
-    # testNFA('a*', 'aaa', True)
-    # testNFA('a|b', '', False)
-    # testNFA('a|b', 'a', True)
-    # testNFA('a|b', 'b', True)
-    # testNFA('a|b', 'ab', False)
-    # testNFA('ab|cd', '', False)
-    # testNFA('ab|cd', 'ab', True)
-    # testNFA('ab|cd', 'cd', True)
-    # testNFA('ab|cd*', '', False)
-    # testNFA('ab|cd*', 'c', True)
-    # testNFA('ab|cd*', 'cd', True)
-    # testNFA('ab|cd*', 'cddddddd', True)
-    # testNFA('ab|cd*', 'ab', True)
-    # testNFA('((ab)|(cd))*', '', True)
-    # testNFA('((ab)|(cd))*', 'ab', True)
-    # testNFA('((ab)|(cd))*', 'cd', True)
-    # testNFA('((ab)|(cd))*', 'abab', True)
-    # testNFA('((ab)|(cd))*', 'abcd', True)
-    # testNFA('((ab)|(cd))*', 'cdcdabcd', True)
-    # testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', '', True)
+    testNFA('cd*', 'cddddddd', True)
+    testNFA('a', '', False)
+    testNFA('a', 'a', True)
+    testNFA('a', 'ab', False)
+    testNFA('a*', '', True)
+    testNFA('a*', 'a', True)
+    testNFA('a*', 'aaa', True)
+    testNFA('a|b', '', False)
+    testNFA('a|b', 'a', True)
+    testNFA('a|b', 'b', True)
+    testNFA('a|b', 'ab', False)
+    testNFA('ab|cd', '', False)
+    testNFA('ab|cd', 'ab', True)
+    testNFA('ab|cd', 'cd', True)
+    testNFA('ab|cd*', '', False)
+    testNFA('ab|cd*', 'c', True)
+    testNFA('ab|cd*', 'cd', True)
+    testNFA('ab|cd*', 'cddddddd', True)
+    testNFA('ab|cd*', 'ab', True)
+    testNFA('((ab)|(cd))*', '', True)
+    testNFA('((ab)|(cd))*', 'ab', True)
+    testNFA('((ab)|(cd))*', 'cd', True)
+    testNFA('((ab)|(cd))*', 'abab', True)
+    testNFA('((ab)|(cd))*', 'abcd', True)
+    testNFA('((ab)|(cd))*', 'cdcdabcd', True)
+    testNFA('((ab|cd)*|(de*fg|h(ij)*klm*n|q))*', '', True)
 
-    # # DFA tests
-    # # format = testDFA(nfa, s, expected)
-    # # testing sym
-    # print("Sym DFA Tests:")
-    # re = parse_re("a")
-    # n = re.transformToNFA()
-    # testDFA(n, "a", True)
+    # DFA tests
+    # format = testDFA(nfa, s, expected)
+    # testing sym
+    print("Sym DFA Tests:")
+    re = parse_re("a")
+    n = re.transformToNFA()
+    testDFA(n, "a", True)
 
-    # re = parse_re("b")
-    # n = re.transformToNFA()
-    # testDFA(n, "a", False)
+    re = parse_re("b")
+    n = re.transformToNFA()
+    testDFA(n, "a", False)
 
-    # # testing Concat
-    # print("----")
-    # print("Concat DFA Tests: ")
-    # re = parse_re("ab")
-    # n = re.transformToNFA()
-    # testDFA(n, "aa", False)
+    # testing Concat
+    print("----")
+    print("Concat DFA Tests: ")
+    re = parse_re("ab")
+    n = re.transformToNFA()
+    testDFA(n, "aa", False)
 
-    # # testing OR
-    # print("----")
-    # print("Or DFA Tests:")
-    # re = parse_re("a|b")
-    # n = re.transformToNFA()
-    # testDFA(n, "a", True)
+    # testing OR
+    print("----")
+    print("Or DFA Tests:")
+    re = parse_re("a|b")
+    n = re.transformToNFA()
+    testDFA(n, "a", True)
 
-    # re = parse_re("a|b")
-    # n = re.transformToNFA()
-    # testDFA(n, "b", True)
+    re = parse_re("a|b")
+    n = re.transformToNFA()
+    testDFA(n, "b", True)
 
-    # re = parse_re("a|b")
-    # n = re.transformToNFA()
-    # testDFA(n, "aa", False)
+    re = parse_re("a|b")
+    n = re.transformToNFA()
+    testDFA(n, "aa", False)
 
-    # # testing Star
-    # re = parse_re("a*")
-    # n = re.transformToNFA()
-    # testDFA(n, "", True)
+    # testing Star
+    re = parse_re("a*")
+    n = re.transformToNFA()
+    testDFA(n, "", True)
 
-    # re = parse_re("a*")
-    # n = re.transformToNFA()
-    # testDFA(n, "b", False)
+    re = parse_re("a*")
+    n = re.transformToNFA()
+    testDFA(n, "b", False)
 
-    # # shortest string check
-    # # check SYM
-    # re1 = parse_re("a")
-    # NFA1 = re1.transformToNFA()
-    # test = nfaToDFA(NFA1)
-    # answer = test.shortestString()
-    # print("SS is " + answer + " and should be a")
+    # shortest string check
+    # check SYM
+    re1 = parse_re("a")
+    NFA1 = re1.transformToNFA()
+    test = nfaToDFA(NFA1)
+    answer = test.shortestString()
+    print("SS is " + answer + " and should be a")
 
-    # # check OR
-    # re1 = parse_re("a|b")
-    # NFA1 = re1.transformToNFA()
-    # test = nfaToDFA(NFA1)
-    # answer = test.shortestString()
-    # print("SS is " + answer + " and should be a (b ok too)")
+    # check OR
+    re1 = parse_re("a|b")
+    NFA1 = re1.transformToNFA()
+    test = nfaToDFA(NFA1)
+    answer = test.shortestString()
+    print("SS is " + answer + " and should be a (b ok too)")
 
-    # # check Star
-    # re1 = parse_re("a*")
-    # NFA1 = re1.transformToNFA()
-    # test = nfaToDFA(NFA1)
-    # answer = test.shortestString()
-    # print("SS is " + answer + " and should be empty")
+    # check Star
+    re1 = parse_re("a*")
+    NFA1 = re1.transformToNFA()
+    test = nfaToDFA(NFA1)
+    answer = test.shortestString()
+    print("SS is " + answer + " and should be empty")
 
     # complement + equivalence DFA tests
     # Sym test
     testEquivalence("a", "a", True)
+    testEquivalence("a", "b", False)
+
+    # concat test
+    testEquivalence("ab", "ab", True)
+    testEquivalence("ab", "a", False)
     
     pass
     
