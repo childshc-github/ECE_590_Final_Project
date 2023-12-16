@@ -16,7 +16,7 @@ class Regex:
         return ans
 
     def transformToNFA(self):
-        print("Not Implemented")
+        print("Regex to self is not implemented")
         pass
     pass
 

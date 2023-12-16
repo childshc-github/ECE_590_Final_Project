@@ -150,9 +150,11 @@ def NFA_union(nfa1, nfa2):
     unfa.states = [state0]
     unfa.is_accepting = {0 : False}
 
-    # merge states
-    u_to_1 = unfa.addStatesFrom(nfa1)
-    u_to_2 = unfa.addStatesFrom(nfa2)
+    # merge copied states
+    nfa1c = copy.deepcopy(nfa1)
+    nfa2c = copy.deepcopy(nfa2)
+    u_to_1 = unfa.addStatesFrom(nfa1c)
+    u_to_2 = unfa.addStatesFrom(nfa2c)
 
     # add union transition
     unfa.addTransition(unfa.states[0], unfa.states[u_to_1])
@@ -167,6 +169,12 @@ def equivalent(re1, re2):
     # boolean tracker
     are_equiv = False
 
+    print(type(re1))
+    print(re2)
+    if re1 == re2:
+        are_equiv = True
+        return are_equiv
+    print("here")
     # create NFA1
     nfa1 = re1.transformToNFA()
 
@@ -177,23 +185,29 @@ def equivalent(re1, re2):
     dfa1 = nfaToDFA(nfa1)
     cdfa1 = dfa1.complement()
     cnfa1 = dfaToNFA(cdfa1)
+    #print("got nfa1 complement")
+
     dfa2 = nfaToDFA(nfa2)
     cdfa2 = dfa2.complement()
     cnfa2 = dfaToNFA(cdfa2)
+    #print("got nfa2 complement")
 
     # union of cNFA1 to NFA2
     union_c1_2 = NFA_union(cnfa1, nfa2)
 
     # union of NFA1 to cNFA2
     union_1_c2 = NFA_union(nfa1, cnfa2)
+    #print("got unions")
 
     # complement of union cNFA1 to NFA2
     d_c1_2 = nfaToDFA(union_c1_2)
     cd_c1_2 = d_c1_2.complement()
+    #print("got complement cNFA1")
 
     # complement of union NFA1 to cNFA2
     d_1_c2 = nfaToDFA(union_1_c2)
     cd_1_c2 = nfaToDFA(d_1_c2)
+    #print("got complement cNFA2")
     
     # determine if any string accepts (emptiness)
     answer1 = cd_c1_2.shortestString()
@@ -390,10 +404,7 @@ if __name__ == "__main__":
 
     # complement + equivalence DFA tests
     # Sym test
-    # NFA1/2 regex = "a" (equiv)
     testEquivalence("a", "a", True)
     
-
-
     pass
     
